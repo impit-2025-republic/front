@@ -9,7 +9,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <React.Fragment>
-      <div className="mx-auto flex flex-col items-center h-screen">
+      <div className="mx-auto flex flex-col px-4 items-center h-screen">
         <div className="max-w-[390px]">
           <Outlet />
         </div>
