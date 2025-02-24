@@ -3,7 +3,7 @@ import {
   init,
 } from "@telegram-apps/sdk-react";
 // import {mockTelegramEnv} from "@telegram-apps/bridge"
-import {retrieveLaunchParams} from "@telegram-apps/sdk";
+import {retrieveLaunchParams} from "@telegram-apps/sdk-react";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
