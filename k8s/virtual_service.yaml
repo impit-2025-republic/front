@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: frontend
+spec:
+  hosts:
+  - "app.b8st.ru"
+  gateways:
+  - b8st-gateway
+  http:
+    route:
+    - destination:
+        port:
+          number: 8000
+        host: frontend.b8st.svc.cluster.local
