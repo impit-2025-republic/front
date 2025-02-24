@@ -23,9 +23,9 @@ declare module "@tanstack/react-router" {
 }
 init()
 const constinitData = initData.raw();
-const constinitDataRaw = initDataRaw();
+const constUserData = initData.user();
 
-console.log("data: " + constinitData, "Raw: " + constinitDataRaw);
+console.log("data: " + constinitData, "user: " + constUserData);
 
 // mockTelegramEnv({ launchParams: { tgWebAppData: { id: 1 } } });
 
