@@ -3,8 +3,9 @@ import { EventCard } from "../components/EventCard";
 import { Badge } from "../components/catalyst/badge";
 import money from "/money.png";
 import { useState } from "react";
-import { retrieveLaunchParams } from "@telegram-apps/bridge";
+import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 import { useLogin } from "../hooks/hooks";
+// import { initData } from "@telegram-apps/sdk-react";
 export const Route = createLazyFileRoute("/")({
   component: RouteComponent,
 });
@@ -21,7 +22,7 @@ function RouteComponent() {
     date: "12.02.2025",
   };
   
-  const {initDataRaw} = retrieveLaunchParams()
+  const initDataRaw = retrieveLaunchParams()
   console.log(initDataRaw)
   const onClick =()=>mutate({
     initDataRaw
