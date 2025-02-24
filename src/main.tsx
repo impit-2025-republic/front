@@ -1,13 +1,12 @@
 import "./index.css";
 import {
-  init,
   initData,
 } from "@telegram-apps/sdk-react";
 // import {mockTelegramEnv} from "@telegram-apps/bridge"
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
-
+import {init} from "./init"
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
@@ -20,16 +19,13 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
-init()
-const constinitData = initData.raw();
-const constUserData = initData.user();
-
-console.log("data: " + constinitData, "user: " + constUserData);
-
 // mockTelegramEnv({ launchParams: { tgWebAppData: { id: 1 } } });
 
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
+  init()
+  const data = initData.raw()
+  console.log(data)
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
