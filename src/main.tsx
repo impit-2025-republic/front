@@ -1,9 +1,10 @@
 import "./index.css";
 import {
   init,
+  initData,
+  initDataRaw,
 } from "@telegram-apps/sdk-react";
 // import {mockTelegramEnv} from "@telegram-apps/bridge"
-import {retrieveLaunchParams} from "@telegram-apps/sdk-react";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
@@ -21,9 +22,10 @@ declare module "@tanstack/react-router" {
   }
 }
 init()
-const { initDataRaw, initData } = retrieveLaunchParams();
+const constinitData = initData.raw();
+const constinitDataRaw = initDataRaw();
 
-console.log("data: " + initData, "Raw: " + initDataRaw);
+console.log("data: " + constinitData, "Raw: " + constinitDataRaw);
 
 // mockTelegramEnv({ launchParams: { tgWebAppData: { id: 1 } } });
 
