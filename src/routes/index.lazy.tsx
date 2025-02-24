@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { EventCard } from '../components/EventCard'
-import { initData, retrieveLaunchParams } from '@telegram-apps/sdk-react';
+import { retrieveLaunchParams } from '@telegram-apps/sdk-react';
 export const Route = createLazyFileRoute('/')({
   component: RouteComponent,
 })
