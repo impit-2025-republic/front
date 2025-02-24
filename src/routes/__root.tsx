@@ -1,14 +1,20 @@
-import * as React from 'react'
-import { Outlet, createRootRoute } from '@tanstack/react-router'
+import * as React from "react";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
+import Navbar from "../components/NavBar";
 
 export const Route = createRootRoute({
   component: RootComponent,
-})
+});
 
 function RootComponent() {
   return (
     <React.Fragment>
-      <Outlet />
+      <div className="mx-auto flex flex-col items-center h-screen">
+        <div className="max-w-[390px]">
+          <Outlet />
+        </div>
+        <Navbar />
+      </div>
     </React.Fragment>
-  )
+  );
 }
