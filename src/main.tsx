@@ -2,7 +2,6 @@ import "./index.css";
 import {
   init,
   initData,
-  initDataRaw,
 } from "@telegram-apps/sdk-react";
 // import {mockTelegramEnv} from "@telegram-apps/bridge"
 import { StrictMode } from "react";
