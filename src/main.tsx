@@ -1,7 +1,6 @@
 import "./index.css";
 import {
   init,
-  miniApp,
 } from "@telegram-apps/sdk-react";
 // import {mockTelegramEnv} from "@telegram-apps/bridge"
 import {retrieveLaunchParams} from "@telegram-apps/sdk";
@@ -21,25 +20,12 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
-
-const initialize = async () => {
-  try {
-    await init();
-    if (miniApp.ready.isAvailable()) {
-      await miniApp.ready();
-      console.log("Готово");
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
+init()
 const { initDataRaw, initData } = retrieveLaunchParams();
 
-console.log("data" + initData, "Raw" + initDataRaw);
+console.log("data: " + initData, "Raw: " + initDataRaw);
 
 // mockTelegramEnv({ launchParams: { tgWebAppData: { id: 1 } } });
-
-initialize();
 
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
