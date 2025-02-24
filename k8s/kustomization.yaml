@@ -5,4 +5,4 @@ resources:
 - virtual_service.yaml
 images:
 - name: ghcr.io/impit-2025-republic/front-main
-  newTag: 432bd6f
+  newTag: 965ba83
