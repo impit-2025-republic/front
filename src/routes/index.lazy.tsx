@@ -21,10 +21,10 @@ function RouteComponent() {
     date: "12.02.2025",
   };
   
-  const launchParams = retrieveLaunchParams()
-  console.log(launchParams)
+  const {initDataRaw} = retrieveLaunchParams()
+  console.log(initDataRaw)
   const onClick =()=>mutate({
-    launchParams
+    initDataRaw
   })
   return (
     <div className="flex flex-col gap-6 text-white">
