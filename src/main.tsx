@@ -1,6 +1,7 @@
 import "./index.css";
 import {
   initData,
+  retrieveLaunchParams,
 } from "@telegram-apps/sdk-react";
 // import {mockTelegramEnv} from "@telegram-apps/bridge"
 import { StrictMode } from "react";
@@ -25,7 +26,9 @@ const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
   init()
   const data = initData.user()
+  const launchParams = retrieveLaunchParams()
   console.log(data)
+  console.log(launchParams)
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
