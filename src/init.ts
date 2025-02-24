@@ -1,6 +1,5 @@
 import {
     backButton,
-    viewport,
     themeParams,
     miniApp,
     initData,
@@ -26,12 +25,4 @@ import {
     miniApp.mount();
     themeParams.mount();
     initData.restore();
-    void viewport
-      .mount()
-      .catch(e => {
-        console.error('Something went wrong mounting the viewport', e);
-      })
-      .then(() => {
-        viewport.bindCssVars();
-      });
   }

@@ -22,8 +22,8 @@ function RouteComponent() {
   };
   
   const launchParams = retrieveLaunchParams()
-  
-  mutate({
+  console.log(launchParams)
+  const onClick =()=>mutate({
     launchParams
   })
   return (
@@ -31,6 +31,7 @@ function RouteComponent() {
       <div className="flex flex-row items-center justify-between">
         <p className="text-[32px]">Главная</p>
         <Badge
+        onClick={()=>onClick()}
           className="!bg-[#3F3F46] px-3 py-1 !rounded-full"
           children={
             <div className="flex flex-row items-center">
