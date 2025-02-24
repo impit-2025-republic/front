@@ -1,6 +1,7 @@
 
 import './index.css'
-import {init, miniApp} from "@telegram-apps/sdk-react"
+import {init, miniApp, retrieveLaunchParams} from "@telegram-apps/sdk-react"
+// import {mockTelegramEnv} from "@telegram-apps/bridge"
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
@@ -29,6 +30,9 @@ const initialize = async ()=>{
     console.error(error)   
   }
 }
+const { initDataRaw, initData } = retrieveLaunchParams();
+
+console.log("data"+initData,"Raw"+initDataRaw)
 
 initialize()
 
