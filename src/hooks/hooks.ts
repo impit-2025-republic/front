@@ -12,6 +12,7 @@ export const useLogin =()=>useMutation({
         return resp
     },
     onSuccess:(data:any)=>{
+        console.log(data)
         localStorage.setItem("token",data)
     }
 })
