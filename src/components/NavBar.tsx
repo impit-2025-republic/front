@@ -9,7 +9,7 @@ export default function Navbar() {
       <Link to="/" className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="wallet" ? "bg-[#FB5FAB]" : ""}`}>
         <WalletIcon color="#fff" />
       </Link>
-      <Link to="/"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="notification" ? "bg-[#FB5FAB]" : ""}`}>
+      <Link to="/events"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="events" ? "bg-[#FB5FAB]" : ""}`}>
         <CalendarIcon color="#fff" />
       </Link>
       <Link to="/"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="" ? "bg-[#FB5FAB]" : ""}`}>

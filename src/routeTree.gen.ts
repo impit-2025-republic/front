@@ -17,6 +17,7 @@ import { Route as rootRoute } from './routes/__root'
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
+const EventsIndexLazyImport = createFileRoute('/events/')()
 
 // Create/Update Routes
 
@@ -25,6 +26,12 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const EventsIndexLazyRoute = EventsIndexLazyImport.update({
+  id: '/events/',
+  path: '/events/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/events/index.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -37,6 +44,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/events/': {
+      id: '/events/'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -44,32 +58,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/events': typeof EventsIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/events': typeof EventsIndexLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/events/': typeof EventsIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/events'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/events'
+  id: '__root__' | '/' | '/events/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  EventsIndexLazyRoute: typeof EventsIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  EventsIndexLazyRoute: EventsIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -82,11 +101,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/events/"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/events/": {
+      "filePath": "events/index.lazy.tsx"
     }
   }
 }
