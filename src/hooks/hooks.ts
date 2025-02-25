@@ -7,7 +7,7 @@ export const useLogin =()=>useMutation({
         const resp = axios.post('https://api.b8st.ru/login',{
         },{
             headers:{
-                Authorization:`tma ${data}`
+                Authorization:`${"tma "+data}`
             }
         })
         return resp
