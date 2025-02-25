@@ -19,6 +19,7 @@ import { Route as rootRoute } from './routes/__root'
 const IndexLazyImport = createFileRoute('/')()
 const WalletIndexLazyImport = createFileRoute('/wallet/')()
 const ProfileIndexLazyImport = createFileRoute('/profile/')()
+const NotificationIndexLazyImport = createFileRoute('/notification/')()
 const EventsIndexLazyImport = createFileRoute('/events/')()
 
 // Create/Update Routes
@@ -40,6 +41,14 @@ const ProfileIndexLazyRoute = ProfileIndexLazyImport.update({
   path: '/profile/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/profile/index.lazy').then((d) => d.Route))
+
+const NotificationIndexLazyRoute = NotificationIndexLazyImport.update({
+  id: '/notification/',
+  path: '/notification/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/notification/index.lazy').then((d) => d.Route),
+)
 
 const EventsIndexLazyRoute = EventsIndexLazyImport.update({
   id: '/events/',
@@ -65,6 +74,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/notification/': {
+      id: '/notification/'
+      path: '/notification'
+      fullPath: '/notification'
+      preLoaderRoute: typeof NotificationIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/profile/': {
       id: '/profile/'
       path: '/profile'
@@ -87,6 +103,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/events': typeof EventsIndexLazyRoute
+  '/notification': typeof NotificationIndexLazyRoute
   '/profile': typeof ProfileIndexLazyRoute
   '/wallet': typeof WalletIndexLazyRoute
 }
@@ -94,6 +111,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/events': typeof EventsIndexLazyRoute
+  '/notification': typeof NotificationIndexLazyRoute
   '/profile': typeof ProfileIndexLazyRoute
   '/wallet': typeof WalletIndexLazyRoute
 }
@@ -102,22 +120,30 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/events/': typeof EventsIndexLazyRoute
+  '/notification/': typeof NotificationIndexLazyRoute
   '/profile/': typeof ProfileIndexLazyRoute
   '/wallet/': typeof WalletIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/events' | '/profile' | '/wallet'
+  fullPaths: '/' | '/events' | '/notification' | '/profile' | '/wallet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/events' | '/profile' | '/wallet'
-  id: '__root__' | '/' | '/events/' | '/profile/' | '/wallet/'
+  to: '/' | '/events' | '/notification' | '/profile' | '/wallet'
+  id:
+    | '__root__'
+    | '/'
+    | '/events/'
+    | '/notification/'
+    | '/profile/'
+    | '/wallet/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   EventsIndexLazyRoute: typeof EventsIndexLazyRoute
+  NotificationIndexLazyRoute: typeof NotificationIndexLazyRoute
   ProfileIndexLazyRoute: typeof ProfileIndexLazyRoute
   WalletIndexLazyRoute: typeof WalletIndexLazyRoute
 }
@@ -125,6 +151,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   EventsIndexLazyRoute: EventsIndexLazyRoute,
+  NotificationIndexLazyRoute: NotificationIndexLazyRoute,
   ProfileIndexLazyRoute: ProfileIndexLazyRoute,
   WalletIndexLazyRoute: WalletIndexLazyRoute,
 }
@@ -141,6 +168,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/events/",
+        "/notification/",
         "/profile/",
         "/wallet/"
       ]
@@ -150,6 +178,9 @@ export const routeTree = rootRoute
     },
     "/events/": {
       "filePath": "events/index.lazy.tsx"
+    },
+    "/notification/": {
+      "filePath": "notification/index.lazy.tsx"
     },
     "/profile/": {
       "filePath": "profile/index.lazy.tsx"

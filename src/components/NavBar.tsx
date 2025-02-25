@@ -16,7 +16,7 @@ export default function Navbar() {
       <Link to="/"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="" ? "bg-[#FB5FAB]" : ""}`}>
         <HomeIcon color="#fff" />
       </Link>
-      <Link to="/"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="messages" ? "bg-[#FB5FAB]" : ""}`}>
+      <Link to="/notification"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="notification" ? "bg-[#FB5FAB]" : ""}`}>
         <EnvelopeIcon color="#fff" />
       </Link>
       <Link to="/profile"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="profile" ? "bg-[#FB5FAB]" : ""}`}>
