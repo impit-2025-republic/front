@@ -23,7 +23,7 @@ function RouteComponent() {
   };
   
   const initDataRaw = initData.raw()
-  console.log(initDataRaw)
+  // console.log(initDataRaw)
   const onClick =()=>mutate(
     initDataRaw
   )
