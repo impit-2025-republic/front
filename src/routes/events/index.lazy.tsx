@@ -8,10 +8,10 @@ export const Route = createLazyFileRoute("/events/")({
 function RouteComponent() {
   const [screen, setScreen] = useState("today");
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 w-full flex-1 text-white">
       <p className="text-[32px]">Главная</p>
-      <div className="flex flex-col gap-4">
-        <div className="bg-[#26282C] flex flex-row flex-1 gap-1 p-1 rounded-2xl">
+      <div className="flex flex-col gap-4 w-full">
+        <div className="bg-[#26282C] flex flex-row flex-1 w-full gap-1 p-1 rounded-2xl">
           <div
             className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "today" ? "bg-[#3F3F46]" : ""}`}
             onClick={() => setScreen("today")}
@@ -19,7 +19,7 @@ function RouteComponent() {
             <p
               className={`text-sm  ${screen === "today" ? "text-white" : " text-[#757575]"}`}
             >
-              Ближайшие
+              Сегодня
             </p>
           </div>
           <div
@@ -29,7 +29,7 @@ function RouteComponent() {
             <p
               className={`text-sm  ${screen === "tomorrow" ? "text-white" : " text-[#757575]"}`}
             >
-              Старые
+              Завтра
             </p>
           </div>
           <div
@@ -39,7 +39,7 @@ function RouteComponent() {
             <p
               className={`text-sm  ${screen === "week" ? "text-white" : " text-[#757575]"}`}
             >
-              Старые
+              Неделя
             </p>
           </div>
           <div
@@ -49,12 +49,12 @@ function RouteComponent() {
             <p
               className={`text-sm  ${screen === "month" ? "text-white" : " text-[#757575]"}`}
             >
-              Старые
+              Месяц
             </p>
           </div>
         </div>
         <div>
-          
+
         </div>
       </div>
     </div>

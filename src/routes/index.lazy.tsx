@@ -32,7 +32,7 @@ function RouteComponent() {
   return (
     <div className="flex flex-col gap-6 text-white">
       <div className="flex flex-row items-center justify-between">
-        <p className="text-[32px]">Главная</p>
+        <p className="text-[32px] text-white">Главная</p>
         <Badge
         onClick={()=>onClick()}
           className="!bg-[#3F3F46] px-3 py-1 !rounded-full"
