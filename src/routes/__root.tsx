@@ -9,10 +9,8 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <React.Fragment>
-      <div className="mx-auto flex flex-col px-4 items-center h-screen">
-        <div className="max-w-[390px]">
+      <div className="mx-auto flex flex-col px-4 items-center h-screen max-w-[390px] min-w-[308px]">
           <Outlet />
-        </div>
         <Navbar />
       </div>
     </React.Fragment>

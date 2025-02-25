@@ -23,6 +23,7 @@ function RouteComponent() {
   };
   
   const {initDataRaw} = retrieveLaunchParams()
+  console.log(initDataRaw)
   const tma = JSON.stringify(initDataRaw)
   console.log(tma)
   const onClick =()=>mutate({
