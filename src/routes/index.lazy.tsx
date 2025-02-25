@@ -26,9 +26,9 @@ function RouteComponent() {
   console.log(initDataRaw)
   const tma = JSON.stringify(initDataRaw)
   console.log(tma)
-  const onClick =()=>mutate({
+  const onClick =()=>mutate(
     tma
-  })
+  )
   return (
     <div className="flex flex-col gap-6 text-white">
       <div className="flex flex-row items-center justify-between">
