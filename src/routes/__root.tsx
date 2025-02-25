@@ -7,10 +7,11 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
+  const heigth = window.innerHeight
   return (
     <React.Fragment>
-      <div className="mx-auto flex flex-col px-4 items-center h-screen">
-        <div className=" max-w-[390px] min-w-[308px]">
+      <div className={`mx-auto flex flex-col px-4 items-center h-[${heigth+100+"px"}] pb-24`}>
+        <div className="w-[308px] px-4">
 
           <Outlet />
         </div>

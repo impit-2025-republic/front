@@ -1,5 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { EventCard } from "../../components/EventCardSmall";
 
 export const Route = createLazyFileRoute("/events/")({
   component: RouteComponent,
@@ -7,9 +8,17 @@ export const Route = createLazyFileRoute("/events/")({
 
 function RouteComponent() {
   const [screen, setScreen] = useState("today");
+  const consts = {
+    title: "label",
+    desc: "asd7",
+    money: "5",
+    achieve: "",
+    status: "awaiting",
+    date: "12.02.2025",
+  };
   return (
     <div className="flex flex-col gap-6 w-full flex-1 text-white">
-      <p className="text-[32px]">Главная</p>
+      <p className="text-[32px]">Уведомления</p>
       <div className="flex flex-col gap-4 w-full">
         <div className="bg-[#26282C] flex flex-row flex-1 w-full gap-1 p-1 rounded-2xl">
           <div
@@ -53,7 +62,9 @@ function RouteComponent() {
             </p>
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-2">
+          <EventCard data={consts} />
+          <EventCard data={consts} />
 
         </div>
       </div>
