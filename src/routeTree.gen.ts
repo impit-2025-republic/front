@@ -17,6 +17,8 @@ import { Route as rootRoute } from './routes/__root'
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
+const WalletIndexLazyImport = createFileRoute('/wallet/')()
+const ProfileIndexLazyImport = createFileRoute('/profile/')()
 const EventsIndexLazyImport = createFileRoute('/events/')()
 
 // Create/Update Routes
@@ -26,6 +28,18 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const WalletIndexLazyRoute = WalletIndexLazyImport.update({
+  id: '/wallet/',
+  path: '/wallet/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/wallet/index.lazy').then((d) => d.Route))
+
+const ProfileIndexLazyRoute = ProfileIndexLazyImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/profile/index.lazy').then((d) => d.Route))
 
 const EventsIndexLazyRoute = EventsIndexLazyImport.update({
   id: '/events/',
@@ -51,6 +65,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/wallet/': {
+      id: '/wallet/'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -59,36 +87,46 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/events': typeof EventsIndexLazyRoute
+  '/profile': typeof ProfileIndexLazyRoute
+  '/wallet': typeof WalletIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/events': typeof EventsIndexLazyRoute
+  '/profile': typeof ProfileIndexLazyRoute
+  '/wallet': typeof WalletIndexLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/events/': typeof EventsIndexLazyRoute
+  '/profile/': typeof ProfileIndexLazyRoute
+  '/wallet/': typeof WalletIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/events'
+  fullPaths: '/' | '/events' | '/profile' | '/wallet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/events'
-  id: '__root__' | '/' | '/events/'
+  to: '/' | '/events' | '/profile' | '/wallet'
+  id: '__root__' | '/' | '/events/' | '/profile/' | '/wallet/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   EventsIndexLazyRoute: typeof EventsIndexLazyRoute
+  ProfileIndexLazyRoute: typeof ProfileIndexLazyRoute
+  WalletIndexLazyRoute: typeof WalletIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   EventsIndexLazyRoute: EventsIndexLazyRoute,
+  ProfileIndexLazyRoute: ProfileIndexLazyRoute,
+  WalletIndexLazyRoute: WalletIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -102,7 +140,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/events/"
+        "/events/",
+        "/profile/",
+        "/wallet/"
       ]
     },
     "/": {
@@ -110,6 +150,12 @@ export const routeTree = rootRoute
     },
     "/events/": {
       "filePath": "events/index.lazy.tsx"
+    },
+    "/profile/": {
+      "filePath": "profile/index.lazy.tsx"
+    },
+    "/wallet/": {
+      "filePath": "wallet/index.lazy.tsx"
     }
   }
 }

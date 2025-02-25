@@ -3,8 +3,6 @@ import { EventCard } from "../components/EventCard";
 import { Badge } from "../components/catalyst/badge";
 import money from "/money.png";
 import { useState } from "react";
-import { initData } from "@telegram-apps/sdk-react";
-import { useLogin } from "../hooks/hooks";
 // import { initData } from "@telegram-apps/sdk-react";
 export const Route = createLazyFileRoute("/")({
   component: RouteComponent,
@@ -12,7 +10,6 @@ export const Route = createLazyFileRoute("/")({
 
 function RouteComponent() {
   const [screen, setScreen] = useState("close")
-  const {mutate} = useLogin()
   const consts = {
     title: "label",
     desc: "asd7",
@@ -22,17 +19,11 @@ function RouteComponent() {
     date: "12.02.2025",
   };
   
-  const initDataRaw = initData.raw()
-  // console.log(initDataRaw)
-  const onClick =()=>mutate(
-    initDataRaw
-  )
   return (
     <div className="flex flex-col gap-6 text-white">
       <div className="flex flex-row items-center justify-between">
         <p className="text-[32px] text-white">Главная</p>
         <Badge
-        onClick={()=>onClick()}
           className="!bg-[#3F3F46] px-3 py-1 !rounded-full"
           children={
             <div className="flex flex-row items-center">
