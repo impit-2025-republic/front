@@ -22,7 +22,7 @@ function RouteComponent() {
     date: "12.02.2025",
   };
   
-  const initDataRaw = initData.user()
+  const initDataRaw = initData.raw()
   console.log(initDataRaw)
   const onClick =()=>mutate(
     initDataRaw
