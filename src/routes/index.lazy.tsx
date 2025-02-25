@@ -22,7 +22,7 @@ function RouteComponent() {
     date: "12.02.2025",
   };
   
-  const {initDataRaw} = retrieveLaunchParams()
+  const initDataRaw = retrieveLaunchParams()
   console.log(initDataRaw)
   const tma = JSON.stringify(initDataRaw, null, 4)
   console.log(tma)
