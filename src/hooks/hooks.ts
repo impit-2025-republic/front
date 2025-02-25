@@ -13,6 +13,6 @@ export const useLogin =()=>useMutation({
     },
     onSuccess:(data:any)=>{
         console.log(data)
-        localStorage.setItem("token",data)
+        localStorage.setItem("token",data.data)
     }
 })
