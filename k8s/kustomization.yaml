@@ -4,4 +4,4 @@ resources:
 - deployment.yaml
 images:
 - name: ghcr.io/impit-2025-republic/front-main
-  newTag: 7f601f9
+  newTag: 40435de
