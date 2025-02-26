@@ -3,17 +3,21 @@ import { EventCard } from "../components/EventCardSmall";
 import { Badge } from "../components/catalyst/badge";
 import money from "/money.png";
 import { useState } from "react";
-import {  useGetEventsUpcoming, useGetUsersMe } from "../api/endpoints/b8st-api";
+import {
+  useGetEventsArchived,
+  useGetEventsUpcoming,
+  useGetUsersMe,
+} from "../api/endpoints/b8st-api";
 // import { initData } from "@telegram-apps/sdk-react";
 export const Route = createLazyFileRoute("/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [screen, setScreen] = useState("close")
-  const {data} = useGetUsersMe()
-  const {data:upcoming} = useGetEventsUpcoming()
-  
+  const [screen, setScreen] = useState("close");
+  const { data } = useGetUsersMe();
+  const { data: upcoming } = useGetEventsUpcoming();
+  const { data: archieve } = useGetEventsArchived();
   return (
     <div className="flex flex-col gap-6 text-white">
       <div className="flex flex-row items-center justify-between">
@@ -30,23 +34,36 @@ function RouteComponent() {
       </div>
       <div className="flex flex-col gap-4">
         <div className="bg-[#26282C] flex flex-row flex-1 gap-1 p-1 rounded-2xl">
-          <div className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === 'close' ? "bg-[#3F3F46]":''}`} onClick={()=>setScreen("close")}>
-            <p className={`text-sm  ${screen === 'close' ? "text-white":' text-[#757575]'}`}>Ближайшие</p>
+          <div
+            className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "close" ? "bg-[#3F3F46]" : ""}`}
+            onClick={() => setScreen("close")}
+          >
+            <p
+              className={`text-sm  ${screen === "close" ? "text-white" : " text-[#757575]"}`}
+            >
+              Ближайшие
+            </p>
           </div>
-          <div className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === 'old' ? "bg-[#3F3F46]":''}`} onClick={()=>setScreen("old")}>
-            <p className={`text-sm  ${screen === 'old' ? "text-white":' text-[#757575]'}`}>Старые</p>
+          <div
+            className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "old" ? "bg-[#3F3F46]" : ""}`}
+            onClick={() => setScreen("old")}
+          >
+            <p
+              className={`text-sm  ${screen === "old" ? "text-white" : " text-[#757575]"}`}
+            >
+              Старые
+            </p>
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          {
-            upcoming?.events?.map((data:any,index:number)=>{
-              return(
-                <EventCard key={index} data={data}/>
-              )
-            })
-          }
+          {screen === "close"
+            ? upcoming?.events?.map((data: any, index: number) => {
+                return <EventCard key={index} data={data} />;
+              })
+            : archieve?.events?.map((data: any, index: number) => {
+                return <EventCard key={index} data={data} />;
+              })}
         </div>
-
       </div>
     </div>
   );

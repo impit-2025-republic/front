@@ -16,7 +16,7 @@ type CardData = {
 
 export const EventCard = ({ data }: CardData) => {
   return (
-    <div className="flex flex-col bg-[#26282C] w-[276px] h-fit p-4 gap-[14px] rounded-[16px]">
+    <div className="flex flex-col bg-[#26282C] w-full h-fit p-4 gap-[14px] rounded-[16px]">
       <div className="flex flex-col gap-2">
         <p className="text-base font-medium">{data?.EventName}</p>
         <p className="text-xs font-normal text-[#71717A]">{data?.Description}</p>
