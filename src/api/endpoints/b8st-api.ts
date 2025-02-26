@@ -19,7 +19,9 @@ import type {
   UseQueryResult,
 } from "@tanstack/react-query";
 import type {
+  AiStreamResponse,
   UsecaseClosedEventsOutput,
+  UsecaseLLMChatInput,
   UsecaseLoginOutput,
   UsecaseUpcomingEventList,
   UsecaseUserMeOutput,
@@ -294,6 +296,89 @@ export function useGetEventsUpcoming<
 
   return query;
 }
+
+/**
+ * @summary chat with llm
+ */
+export const postLlm = (
+  usecaseLLMChatInput: UsecaseLLMChatInput,
+  signal?: AbortSignal,
+) => {
+  return requestInstance<AiStreamResponse>({
+    url: `/llm`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    data: usecaseLLMChatInput,
+    signal,
+  });
+};
+
+export const getPostLlmMutationOptions = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postLlm>>,
+    TError,
+    { data: UsecaseLLMChatInput },
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postLlm>>,
+  TError,
+  { data: UsecaseLLMChatInput },
+  TContext
+> => {
+  const mutationKey = ["postLlm"];
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postLlm>>,
+    { data: UsecaseLLMChatInput }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return postLlm(data);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type PostLlmMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postLlm>>
+>;
+export type PostLlmMutationBody = UsecaseLLMChatInput;
+export type PostLlmMutationError = ErrorType<void>;
+
+/**
+ * @summary chat with llm
+ */
+export const usePostLlm = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postLlm>>,
+    TError,
+    { data: UsecaseLLMChatInput },
+    TContext
+  >;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postLlm>>,
+  TError,
+  { data: UsecaseLLMChatInput },
+  TContext
+> => {
+  const mutationOptions = getPostLlmMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
 
 /**
  * @summary login with telegram

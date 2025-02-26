@@ -100,6 +100,29 @@ export const getEventsUpcomingResponse = zod.object({
 
 
 /**
+ * @summary chat with llm
+ */
+export const postLlmBody = zod.object({
+  "promnt": zod.string().optional()
+})
+
+export const postLlmResponse = zod.object({
+  "choices": zod.array(zod.object({
+  "finish_reason": zod.string().optional(),
+  "index": zod.number().optional(),
+  "logprobs": zod.string().optional(),
+  "stop_reason": zod.string().optional(),
+  "text": zod.string().optional()
+})).optional(),
+  "created": zod.number().optional(),
+  "id": zod.string().optional(),
+  "model": zod.string().optional(),
+  "object": zod.string().optional(),
+  "usage": zod.string().optional()
+})
+
+
+/**
  * @summary login with telegram
  */
 export const postLoginResponse = zod.object({
