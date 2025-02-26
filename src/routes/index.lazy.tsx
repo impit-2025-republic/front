@@ -3,7 +3,7 @@ import { EventCard } from "../components/EventCardSmall";
 import { Badge } from "../components/catalyst/badge";
 import money from "/money.png";
 import { useState } from "react";
-import { getUsersMe, useGetEventsUpcoming, useGetUsersMe } from "../api/endpoints/b8st-api";
+import {  useGetEventsUpcoming, useGetUsersMe } from "../api/endpoints/b8st-api";
 // import { initData } from "@telegram-apps/sdk-react";
 export const Route = createLazyFileRoute("/")({
   component: RouteComponent,
@@ -12,14 +12,6 @@ export const Route = createLazyFileRoute("/")({
 function RouteComponent() {
   const [screen, setScreen] = useState("close")
   const {data} = useGetUsersMe()
-  const consts = {
-    title: "label",
-    desc: "asd7",
-    money: "5",
-    achieve: "",
-    status: "awaiting",
-    date: "12.02.2025",
-  };
   const {data:upcoming} = useGetEventsUpcoming()
   
   return (
