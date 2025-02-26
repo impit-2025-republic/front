@@ -26,9 +26,9 @@ function RouteComponent() {
         <Badge
           className="!bg-[#3F3F46] px-3 py-1 !rounded-full"
           children={
-            <div className="flex flex-row items-center">
-              <p className="text-[11px] font-normal">{5}</p>
+            <div className="flex flex-row items-center gap-2">
               <img src={money} width={14} height={16} />
+              <p className="text-[11px] font-normal">{5}</p>
             </div>
           }
         />

@@ -1,9 +1,9 @@
-import money from '/money.png'
+
 
 export const Transaction =()=>{
     return(
-        <div className="py-4 flex flex-row w-full text-white">
-            <img src={money} width={40} height={48} />
+        <div className="py-4 flex flex-row w-full text-white justify-between">
+            {/* <img src={money} width={48} height={48} /> */}
             <div className='flex flex-col gap-1'>
                 <p className='text-base font-normal'>
                     Зачисление
