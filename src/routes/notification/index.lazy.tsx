@@ -1,5 +1,4 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { EventCard } from '../../components/EventCardSmall'
 
 export const Route = createLazyFileRoute('/notification/')({
   component: RouteComponent,
