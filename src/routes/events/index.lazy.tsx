@@ -1,6 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { EventCard } from "../../components/EventCardSmall";
+import { useGetEventsUpcoming } from "../../api/endpoints/b8st-api";
 
 export const Route = createLazyFileRoute("/events/")({
   component: RouteComponent,
@@ -8,14 +9,7 @@ export const Route = createLazyFileRoute("/events/")({
 
 function RouteComponent() {
   const [screen, setScreen] = useState("today");
-  const consts = {
-    title: "label",
-    desc: "asd7",
-    money: "5",
-    achieve: "",
-    status: "awaiting",
-    date: "12.02.2025",
-  };
+  const {data:upcoming} = useGetEventsUpcoming()
   return (
     <div className="flex flex-col gap-6 w-full flex-1 text-white">
       <p className="text-[32px]">Уведомления</p>
@@ -63,9 +57,13 @@ function RouteComponent() {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <EventCard data={consts} />
-          <EventCard data={consts} />
-
+        {
+            upcoming?.events?.map((data:any,index:number)=>{
+              return(
+                <EventCard key={index} data={data}/>
+              )
+            })
+          }
         </div>
       </div>
     </div>
