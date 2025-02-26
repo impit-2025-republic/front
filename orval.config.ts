@@ -1,14 +1,14 @@
 import { defineConfig } from 'orval';
 
 export default defineConfig({
-  nmost: {
+  b8st: {
     output: {
       mode: 'split',
-      target: 'src/api/endpoints/api.ts',
+      target: 'src/api/endpoints/b8st-api.ts',
       schemas: 'src/api/model',
       client: 'react-query',
       prettier: true,
-      mock: true,
+      mock: false,
       override: {
         mutator: {
           path: 'src/api/endpoints/axios-instance.ts',
@@ -17,7 +17,18 @@ export default defineConfig({
       },
     },
     input: {
-      target: '/src/hooks/swagger.yaml',
+      target: './swagger.yaml',
     },
+  },
+  b8stZod: {
+    input: {
+      target: './swagger.yaml',
+    },
+    output: {
+      mode: 'split',
+      client: 'zod',
+      target: 'src/api/endpoints/b8st-api.zod.ts',
+    },
+    hooks: {},
   },
 });
