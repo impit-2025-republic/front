@@ -4,9 +4,9 @@
  * B8boost API
  * OpenAPI spec version: 1.0
  */
-import type { EntitiesEvent } from "./entitiesEvent";
+import type { UsecaseEventWithRegistration } from "./usecaseEventWithRegistration";
 
 export interface UsecaseUpcomingEventList {
-  events?: EntitiesEvent[];
+  events?: UsecaseEventWithRegistration[];
   total?: number;
 }

@@ -4,7 +4,6 @@ import { Badge } from "../components/catalyst/badge";
 import money from "/money.png";
 import { useState } from "react";
 import {
-  useGetEventsArchived,
   useGetEventsUpcoming,
   useGetUsersMe,
 } from "../api/endpoints/b8st-api";
@@ -14,10 +13,11 @@ export const Route = createLazyFileRoute("/")({
 });
 
 function RouteComponent() {
-  const [screen, setScreen] = useState("close");
+  const [screen, setScreen] = useState<'today' | 'tomorrow' | 'month' | 'week'>(
+    'today'
+  );
   const { data } = useGetUsersMe();
-  const { data: upcoming } = useGetEventsUpcoming();
-  const { data: archieve } = useGetEventsArchived();
+  const { data: upcoming } = useGetEventsUpcoming({ period: screen });
   return (
     <div className="flex flex-col gap-6 text-white">
       <div className="flex flex-row items-center justify-between">
@@ -32,37 +32,53 @@ function RouteComponent() {
           }
         />
       </div>
-      <div className="flex flex-col gap-4">
-        <div className="bg-[#26282C] flex flex-row flex-1 gap-1 p-1 rounded-2xl">
+      <div className="flex flex-col gap-4 w-full">
+        <div className="bg-[#26282C] flex flex-row flex-1 w-full gap-1 p-1 rounded-2xl">
           <div
-            className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "close" ? "bg-[#3F3F46]" : ""}`}
-            onClick={() => setScreen("close")}
+            className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "today" ? "bg-[#3F3F46]" : ""}`}
+            onClick={() => setScreen("today")}
           >
             <p
-              className={`text-sm  ${screen === "close" ? "text-white" : " text-[#757575]"}`}
+              className={`text-sm  ${screen === "today" ? "text-white" : " text-[#757575]"}`}
             >
-              Ближайшие
+              Сегодня
             </p>
           </div>
           <div
-            className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "old" ? "bg-[#3F3F46]" : ""}`}
-            onClick={() => setScreen("old")}
+            className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "tomorrow" ? "bg-[#3F3F46]" : ""}`}
+            onClick={() => setScreen("tomorrow")}
           >
             <p
-              className={`text-sm  ${screen === "old" ? "text-white" : " text-[#757575]"}`}
+              className={`text-sm  ${screen === "tomorrow" ? "text-white" : " text-[#757575]"}`}
             >
-              Старые
+              Завтра
+            </p>
+          </div>
+          <div
+            className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "week" ? "bg-[#3F3F46]" : ""}`}
+            onClick={() => setScreen("week")}
+          >
+            <p
+              className={`text-sm  ${screen === "week" ? "text-white" : " text-[#757575]"}`}
+            >
+              Неделя
+            </p>
+          </div>
+          <div
+            className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "month" ? "bg-[#3F3F46]" : ""}`}
+            onClick={() => setScreen("month")}
+          >
+            <p
+              className={`text-sm  ${screen === "month" ? "text-white" : " text-[#757575]"}`}
+            >
+              Месяц
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-4">
-          {screen === "close"
-            ? upcoming?.events?.map((data: any, index: number) => {
-                return <EventCard key={index} data={data} />;
-              })
-            : archieve?.events?.map((data: any, index: number) => {
-                return <EventCard key={index} data={data} />;
-              })}
+        <div className="flex flex-col gap-2">
+          {upcoming?.events?.map((data: any, index: number) => {
+            return <EventCard key={index} data={data} />;
+          })}
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { Avatar } from '../../components/catalyst/avatar'
 import achieve from "/achieve.png";
+import CaseAnimation from '../../components/Case';
 
 export const Route = createLazyFileRoute('/profile/')({
   component: RouteComponent,
@@ -28,6 +29,7 @@ function RouteComponent() {
         <p className='text-[#B3B3B3] text-base'>Витрина достижений</p>
       </div>
     </div>
+    <CaseAnimation />
   </div>
 )
 }

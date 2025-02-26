@@ -78,6 +78,8 @@ definitions:
         type: string
       endDs:
         type: string
+      erpID:
+        type: integer
       eventID:
         type: integer
       eventName:
@@ -112,12 +114,58 @@ definitions:
       productID:
         type: integer
     type: object
+  usecase.AdminVisitEventInput:
+    properties:
+      achievement_type_id:
+        type: integer
+      eventID:
+        type: integer
+      userID:
+        type: integer
+    type: object
   usecase.ClosedEventsOutput:
     properties:
       events:
         items:
           $ref: '#/definitions/entities.Event'
         type: array
+    type: object
+  usecase.EventWithRegistration:
+    properties:
+      achievementType:
+        $ref: '#/definitions/entities.AchievementType'
+      achievementTypeID:
+        type: integer
+      coin:
+        type: number
+      company:
+        $ref: '#/definitions/entities.Company'
+      companyID:
+        type: integer
+      createdAt:
+        type: string
+      description:
+        type: string
+      endDs:
+        type: string
+      erpID:
+        type: integer
+      eventID:
+        type: integer
+      eventName:
+        type: string
+      eventType:
+        type: string
+      is_registered:
+        type: boolean
+      maxUsers:
+        type: integer
+      startDs:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
     type: object
   usecase.LLMChatInput:
     properties:
@@ -129,11 +177,23 @@ definitions:
       token:
         type: string
     type: object
+  usecase.UpcomingEventInput:
+    properties:
+      period:
+        enum:
+        - today
+        - tomorrow
+        - week
+        - month
+        type: string
+      userID:
+        type: integer
+    type: object
   usecase.UpcomingEventList:
     properties:
       events:
         items:
-          $ref: '#/definitions/entities.Event'
+          $ref: '#/definitions/usecase.EventWithRegistration'
         type: array
       total:
         type: integer
@@ -143,7 +203,7 @@ definitions:
       birth_date:
         type: string
       coin:
-        type: integer
+        type: number
       email:
         type: string
       events:
@@ -161,11 +221,37 @@ definitions:
       user_id:
         type: integer
     type: object
+  usecase.VisitEventInput:
+    properties:
+      eventID:
+        type: integer
+    type: object
 info:
   contact: {}
   title: B8boost API
   version: "1.0"
 paths:
+  /admin/events/visit:
+    post:
+      parameters:
+      - description: input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.AdminVisitEventInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      security:
+      - BearerAuth: []
+      summary: admin visit event
+      tags:
+      - event
   /events/archived:
     get:
       produces:
@@ -184,6 +270,13 @@ paths:
       - event
   /events/upcoming:
     get:
+      parameters:
+      - description: input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.UpcomingEventInput'
       produces:
       - application/json
       responses:
@@ -196,6 +289,27 @@ paths:
       security:
       - BearerAuth: []
       summary: get upcoming events
+      tags:
+      - event
+  /events/visit:
+    post:
+      parameters:
+      - description: input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.VisitEventInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      security:
+      - BearerAuth: []
+      summary: visit event
       tags:
       - event
   /llm:

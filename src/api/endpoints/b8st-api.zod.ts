@@ -9,6 +9,16 @@ import {
 } from 'zod'
 
 /**
+ * @summary admin visit event
+ */
+export const postAdminEventsVisitBody = zod.object({
+  "achievement_type_id": zod.number().optional(),
+  "eventID": zod.number().optional(),
+  "userID": zod.number().optional()
+})
+
+
+/**
  * @summary get archived events
  */
 export const getEventsArchivedResponse = zod.object({
@@ -42,6 +52,7 @@ export const getEventsArchivedResponse = zod.object({
   "createdAt": zod.string().optional(),
   "description": zod.string().optional(),
   "endDs": zod.string().optional(),
+  "erpID": zod.number().optional(),
   "eventID": zod.number().optional(),
   "eventName": zod.string().optional(),
   "eventType": zod.string().optional(),
@@ -56,13 +67,17 @@ export const getEventsArchivedResponse = zod.object({
 /**
  * @summary get upcoming events
  */
+export const getEventsUpcomingBody = zod.object({
+  "period": zod.enum(['today', 'tomorrow', 'week', 'month']).optional(),
+  "userID": zod.number().optional()
+})
+
 export const getEventsUpcomingResponse = zod.object({
   "events": zod.array(zod.object({
   "achievementType": zod.object({
   "achievementTypeID": zod.number().optional(),
-  "events": zod.array(zod.any()).optional(),
-  "name": zod.string().optional()
-}).optional(),
+  "events": zod.array(zod.object({
+  "achievementType": zod.any().optional(),
   "achievementTypeID": zod.number().optional(),
   "coin": zod.number().optional(),
   "company": zod.object({
@@ -87,6 +102,7 @@ export const getEventsUpcomingResponse = zod.object({
   "createdAt": zod.string().optional(),
   "description": zod.string().optional(),
   "endDs": zod.string().optional(),
+  "erpID": zod.number().optional(),
   "eventID": zod.number().optional(),
   "eventName": zod.string().optional(),
   "eventType": zod.string().optional(),
@@ -95,7 +111,72 @@ export const getEventsUpcomingResponse = zod.object({
   "status": zod.string().optional(),
   "title": zod.string().optional()
 })).optional(),
+  "name": zod.string().optional()
+}).optional(),
+  "achievementTypeID": zod.number().optional(),
+  "coin": zod.number().optional(),
+  "company": zod.object({
+  "company": zod.string().optional(),
+  "companyID": zod.number().optional(),
+  "description": zod.string().optional(),
+  "events": zod.array(zod.object({
+  "achievementType": zod.object({
+  "achievementTypeID": zod.number().optional(),
+  "events": zod.array(zod.any()).optional(),
+  "name": zod.string().optional()
+}).optional(),
+  "achievementTypeID": zod.number().optional(),
+  "coin": zod.number().optional(),
+  "company": zod.any().optional(),
+  "companyID": zod.number().optional(),
+  "createdAt": zod.string().optional(),
+  "description": zod.string().optional(),
+  "endDs": zod.string().optional(),
+  "erpID": zod.number().optional(),
+  "eventID": zod.number().optional(),
+  "eventName": zod.string().optional(),
+  "eventType": zod.string().optional(),
+  "maxUsers": zod.number().optional(),
+  "startDs": zod.string().optional(),
+  "status": zod.string().optional(),
+  "title": zod.string().optional()
+})).optional(),
+  "logo": zod.string().optional(),
+  "products": zod.array(zod.object({
+  "avalibility": zod.number().optional(),
+  "company": zod.any().optional(),
+  "companyID": zod.number().optional(),
+  "description": zod.string().optional(),
+  "image": zod.string().optional(),
+  "name": zod.string().optional(),
+  "price": zod.number().optional(),
+  "productID": zod.number().optional()
+})).optional(),
+  "title": zod.string().optional()
+}).optional(),
+  "companyID": zod.number().optional(),
+  "createdAt": zod.string().optional(),
+  "description": zod.string().optional(),
+  "endDs": zod.string().optional(),
+  "erpID": zod.number().optional(),
+  "eventID": zod.number().optional(),
+  "eventName": zod.string().optional(),
+  "eventType": zod.string().optional(),
+  "is_registered": zod.boolean().optional(),
+  "maxUsers": zod.number().optional(),
+  "startDs": zod.string().optional(),
+  "status": zod.string().optional(),
+  "title": zod.string().optional()
+})).optional(),
   "total": zod.number().optional()
+})
+
+
+/**
+ * @summary visit event
+ */
+export const postEventsVisitBody = zod.object({
+  "eventID": zod.number().optional()
 })
 
 
@@ -167,6 +248,7 @@ export const getUsersMeResponse = zod.object({
   "createdAt": zod.string().optional(),
   "description": zod.string().optional(),
   "endDs": zod.string().optional(),
+  "erpID": zod.number().optional(),
   "eventID": zod.number().optional(),
   "eventName": zod.string().optional(),
   "eventType": zod.string().optional(),

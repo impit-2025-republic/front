@@ -1,4 +1,4 @@
-import { CalendarIcon, EnvelopeIcon, HomeIcon, UserCircleIcon, WalletIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, UserCircleIcon, UserIcon, WalletIcon } from "@heroicons/react/24/solid";
 // import {Wallet} from "solar-icon-set/money"
 import { Link, useLocation } from "@tanstack/react-router";
 
@@ -6,21 +6,22 @@ export default function Navbar() {
   const route =useLocation({select:(location)=>location.pathname})
   const path = route.split('/')
   return (
-    <div className="fixed inset-y-0 top-auto mx-auto pb-2 pt-2 z-20 flex w-screen flex-row justify-between bg-[#191B1F]">
-      <Link to="/wallet" className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="wallet" ? "bg-[#FB5FAB]" : ""}`}>
-        <WalletIcon color="#fff"/>
+    <div className="fixed inset-y-0 top-auto mx-auto pb-2 pt-2 z-20 flex w-screen flex-row h-[68px] justify-between bg-[#191B1F]">
+      <Link to="/"  className={` w-[68px] h-[60px] flex flex-col items-center gap-1`}>
+        <HomeIcon width={24} height={24} color={path[1]==="" ? "#fff" : "#71717A"} />
+          <p className={` text-xs ${path[1]==="" ? "text-[#fff]" : "text-[#71717A]"}`}>Дом</p>
+        </Link>
+      <Link to="/notification"  className={` w-[68px] h-[60px] flex flex-col items-center gap-1`}>
+        <UserIcon width={24} height={24} color={path[1]==="wallet" ? "#fff" : "#71717A"} />
+        <p className={` text-xs ${path[1]==="wallet" ? "text-[#fff]" : "text-[#71717A]"}`}>Чат с ИИ</p>
       </Link>
-      <Link to="/events"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="events" ? "bg-[#FB5FAB]" : ""}`}>
-        <CalendarIcon color="#fff" />
+      <Link to="/wallet"  className={` w-[68px] h-[60px] flex flex-col items-center gap-1`}>
+        <WalletIcon  width={24} height={24} color={path[1]==="wallet" ? "#fff" : "#71717A"}/>
+        <p className={` text-xs ${path[1]==="wallet" ? "text-[#fff]" : "text-[#71717A]"}`}>Кошелек</p>
       </Link>
-      <Link to="/"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="" ? "bg-[#FB5FAB]" : ""}`}>
-        <HomeIcon color="#fff" />
-      </Link>
-      <Link to="/notification"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="notification" ? "bg-[#FB5FAB]" : ""}`}>
-        <EnvelopeIcon color="#fff" />
-      </Link>
-      <Link to="/profile"  className={`p-4 w-14 h-14 rounded-[12px] ${path[1]==="profile" ? "bg-[#FB5FAB]" : ""}`}>
-        <UserCircleIcon color="#fff" />
+      <Link to="/profile" className={` w-[68px] h-[60px] flex flex-col items-center gap-1`}>
+        <UserCircleIcon width={24} height={24} color={path[1]==="wallet" ? "#fff" : "#71717A"}/>
+        <p className={` text-xs ${path[1]==="wallet" ? "text-[#fff]" : "text-[#71717A]"}`}>Профиль</p>
       </Link>
     </div>
   );

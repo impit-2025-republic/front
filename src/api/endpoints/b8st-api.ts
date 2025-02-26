@@ -20,14 +20,100 @@ import type {
 } from "@tanstack/react-query";
 import type {
   AiStreamResponse,
+  UsecaseAdminVisitEventInput,
   UsecaseClosedEventsOutput,
   UsecaseLLMChatInput,
   UsecaseLoginOutput,
+  UsecaseUpcomingEventInput,
   UsecaseUpcomingEventList,
   UsecaseUserMeOutput,
+  UsecaseVisitEventInput,
 } from "../model";
 import { requestInstance } from "./axios-instance";
 import type { ErrorType } from "./axios-instance";
+
+/**
+ * @summary admin visit event
+ */
+export const postAdminEventsVisit = (
+  usecaseAdminVisitEventInput: UsecaseAdminVisitEventInput,
+  signal?: AbortSignal,
+) => {
+  return requestInstance<void>({
+    url: `/admin/events/visit`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    data: usecaseAdminVisitEventInput,
+    signal,
+  });
+};
+
+export const getPostAdminEventsVisitMutationOptions = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAdminEventsVisit>>,
+    TError,
+    { data: UsecaseAdminVisitEventInput },
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postAdminEventsVisit>>,
+  TError,
+  { data: UsecaseAdminVisitEventInput },
+  TContext
+> => {
+  const mutationKey = ["postAdminEventsVisit"];
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postAdminEventsVisit>>,
+    { data: UsecaseAdminVisitEventInput }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return postAdminEventsVisit(data);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type PostAdminEventsVisitMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postAdminEventsVisit>>
+>;
+export type PostAdminEventsVisitMutationBody = UsecaseAdminVisitEventInput;
+export type PostAdminEventsVisitMutationError = ErrorType<void>;
+
+/**
+ * @summary admin visit event
+ */
+export const usePostAdminEventsVisit = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAdminEventsVisit>>,
+    TError,
+    { data: UsecaseAdminVisitEventInput },
+    TContext
+  >;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postAdminEventsVisit>>,
+  TError,
+  { data: UsecaseAdminVisitEventInput },
+  TContext
+> => {
+  const mutationOptions = getPostAdminEventsVisitMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
 
 /**
  * @summary get archived events
@@ -166,37 +252,49 @@ export function useGetEventsArchived<
 /**
  * @summary get upcoming events
  */
-export const getEventsUpcoming = (signal?: AbortSignal) => {
+export const getEventsUpcoming = (
+  //@ts-ignore
+  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  signal?: AbortSignal,
+) => {
   return requestInstance<UsecaseUpcomingEventList>({
     url: `/events/upcoming`,
     method: "GET",
+    headers: { "Content-Type": "application/json" },
     signal,
   });
 };
 
-export const getGetEventsUpcomingQueryKey = () => {
-  return [`/events/upcoming`] as const;
+export const getGetEventsUpcomingQueryKey = (
+  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+) => {
+  return [`/events/upcoming`, usecaseUpcomingEventInput] as const;
 };
 
 export const getGetEventsUpcomingQueryOptions = <
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getEventsUpcoming>>,
-      TError,
-      TData
-    >
-  >;
-}) => {
+>(
+  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getEventsUpcoming>>,
+        TError,
+        TData
+      >
+    >;
+  },
+) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetEventsUpcomingQueryKey();
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetEventsUpcomingQueryKey(usecaseUpcomingEventInput);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof getEventsUpcoming>>
-  > = ({ signal }) => getEventsUpcoming(signal);
+  > = ({ signal }) => getEventsUpcoming(usecaseUpcomingEventInput, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getEventsUpcoming>>,
@@ -213,59 +311,68 @@ export type GetEventsUpcomingQueryError = ErrorType<void>;
 export function useGetEventsUpcoming<
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
->(options: {
-  query: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getEventsUpcoming>>,
-      TError,
-      TData
-    >
-  > &
-    Pick<
-      DefinedInitialDataOptions<
+>(
+  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  options: {
+    query: Partial<
+      UseQueryOptions<
         Awaited<ReturnType<typeof getEventsUpcoming>>,
         TError,
-        Awaited<ReturnType<typeof getEventsUpcoming>>
-      >,
-      "initialData"
-    >;
-}): DefinedUseQueryResult<TData, TError> & {
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getEventsUpcoming>>,
+          TError,
+          Awaited<ReturnType<typeof getEventsUpcoming>>
+        >,
+        "initialData"
+      >;
+  },
+): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 export function useGetEventsUpcoming<
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getEventsUpcoming>>,
-      TError,
-      TData
-    >
-  > &
-    Pick<
-      UndefinedInitialDataOptions<
+>(
+  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
         Awaited<ReturnType<typeof getEventsUpcoming>>,
         TError,
-        Awaited<ReturnType<typeof getEventsUpcoming>>
-      >,
-      "initialData"
-    >;
-}): UseQueryResult<TData, TError> & {
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getEventsUpcoming>>,
+          TError,
+          Awaited<ReturnType<typeof getEventsUpcoming>>
+        >,
+        "initialData"
+      >;
+  },
+): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 export function useGetEventsUpcoming<
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getEventsUpcoming>>,
-      TError,
-      TData
-    >
-  >;
-}): UseQueryResult<TData, TError> & {
+>(
+  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getEventsUpcoming>>,
+        TError,
+        TData
+      >
+    >;
+  },
+): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
@@ -275,18 +382,24 @@ export function useGetEventsUpcoming<
 export function useGetEventsUpcoming<
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getEventsUpcoming>>,
-      TError,
-      TData
-    >
-  >;
-}): UseQueryResult<TData, TError> & {
+>(
+  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getEventsUpcoming>>,
+        TError,
+        TData
+      >
+    >;
+  },
+): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetEventsUpcomingQueryOptions(options);
+  const queryOptions = getGetEventsUpcomingQueryOptions(
+    usecaseUpcomingEventInput,
+    options,
+  );
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
@@ -296,6 +409,89 @@ export function useGetEventsUpcoming<
 
   return query;
 }
+
+/**
+ * @summary visit event
+ */
+export const postEventsVisit = (
+  usecaseVisitEventInput: UsecaseVisitEventInput,
+  signal?: AbortSignal,
+) => {
+  return requestInstance<void>({
+    url: `/events/visit`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    data: usecaseVisitEventInput,
+    signal,
+  });
+};
+
+export const getPostEventsVisitMutationOptions = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postEventsVisit>>,
+    TError,
+    { data: UsecaseVisitEventInput },
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postEventsVisit>>,
+  TError,
+  { data: UsecaseVisitEventInput },
+  TContext
+> => {
+  const mutationKey = ["postEventsVisit"];
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postEventsVisit>>,
+    { data: UsecaseVisitEventInput }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return postEventsVisit(data);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type PostEventsVisitMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postEventsVisit>>
+>;
+export type PostEventsVisitMutationBody = UsecaseVisitEventInput;
+export type PostEventsVisitMutationError = ErrorType<void>;
+
+/**
+ * @summary visit event
+ */
+export const usePostEventsVisit = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postEventsVisit>>,
+    TError,
+    { data: UsecaseVisitEventInput },
+    TContext
+  >;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postEventsVisit>>,
+  TError,
+  { data: UsecaseVisitEventInput },
+  TContext
+> => {
+  const mutationOptions = getPostEventsVisitMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
 
 /**
  * @summary chat with llm

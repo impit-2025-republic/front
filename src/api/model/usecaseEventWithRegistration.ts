@@ -7,7 +7,7 @@
 import type { EntitiesAchievementType } from "./entitiesAchievementType";
 import type { EntitiesCompany } from "./entitiesCompany";
 
-export interface EntitiesEvent {
+export interface UsecaseEventWithRegistration {
   achievementType?: EntitiesAchievementType;
   achievementTypeID?: number;
   coin?: number;
@@ -20,6 +20,7 @@ export interface EntitiesEvent {
   eventID?: number;
   eventName?: string;
   eventType?: string;
+  is_registered?: boolean;
   maxUsers?: number;
   startDs?: string;
   status?: string;
