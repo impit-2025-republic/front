@@ -67,9 +67,8 @@ export const getEventsArchivedResponse = zod.object({
 /**
  * @summary get upcoming events
  */
-export const getEventsUpcomingBody = zod.object({
-  "period": zod.enum(['today', 'tomorrow', 'week', 'month']).optional(),
-  "userID": zod.number().optional()
+export const getEventsUpcomingQueryParams = zod.object({
+  "period": zod.string().optional()
 })
 
 export const getEventsUpcomingResponse = zod.object({

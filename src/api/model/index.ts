@@ -21,3 +21,4 @@ export * from "./usecaseUpcomingEventInputPeriod";
 export * from "./usecaseUpcomingEventList";
 export * from "./usecaseUserMeOutput";
 export * from "./usecaseVisitEventInput";
+export * from "./getEventsUpcomingParams";

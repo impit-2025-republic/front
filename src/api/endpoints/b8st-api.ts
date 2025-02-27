@@ -20,11 +20,11 @@ import type {
 } from "@tanstack/react-query";
 import type {
   AiStreamResponse,
+  GetEventsUpcomingParams,
   UsecaseAdminVisitEventInput,
   UsecaseClosedEventsOutput,
   UsecaseLLMChatInput,
   UsecaseLoginOutput,
-  UsecaseUpcomingEventInput,
   UsecaseUpcomingEventList,
   UsecaseUserMeOutput,
   UsecaseVisitEventInput,
@@ -253,29 +253,28 @@ export function useGetEventsArchived<
  * @summary get upcoming events
  */
 export const getEventsUpcoming = (
-  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  params?: GetEventsUpcomingParams,
   signal?: AbortSignal,
 ) => {
   return requestInstance<UsecaseUpcomingEventList>({
     url: `/events/upcoming`,
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    params,
     signal,
-    data: usecaseUpcomingEventInput,
   });
 };
 
 export const getGetEventsUpcomingQueryKey = (
-  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  params?: GetEventsUpcomingParams,
 ) => {
-  return [`/events/upcoming`, usecaseUpcomingEventInput] as const;
+  return [`/events/upcoming`, ...(params ? [params] : [])] as const;
 };
 
 export const getGetEventsUpcomingQueryOptions = <
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
 >(
-  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  params?: GetEventsUpcomingParams,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -289,12 +288,11 @@ export const getGetEventsUpcomingQueryOptions = <
   const { query: queryOptions } = options ?? {};
 
   const queryKey =
-    queryOptions?.queryKey ??
-    getGetEventsUpcomingQueryKey(usecaseUpcomingEventInput);
+    queryOptions?.queryKey ?? getGetEventsUpcomingQueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof getEventsUpcoming>>
-  > = ({ signal }) => getEventsUpcoming(usecaseUpcomingEventInput, signal);
+  > = ({ signal }) => getEventsUpcoming(params, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getEventsUpcoming>>,
@@ -312,7 +310,7 @@ export function useGetEventsUpcoming<
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
 >(
-  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  params: undefined | GetEventsUpcomingParams,
   options: {
     query: Partial<
       UseQueryOptions<
@@ -337,7 +335,7 @@ export function useGetEventsUpcoming<
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
 >(
-  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  params?: GetEventsUpcomingParams,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -362,7 +360,7 @@ export function useGetEventsUpcoming<
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
 >(
-  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  params?: GetEventsUpcomingParams,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -383,7 +381,7 @@ export function useGetEventsUpcoming<
   TData = Awaited<ReturnType<typeof getEventsUpcoming>>,
   TError = ErrorType<void>,
 >(
-  usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
+  params?: GetEventsUpcomingParams,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -396,10 +394,7 @@ export function useGetEventsUpcoming<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetEventsUpcomingQueryOptions(
-    usecaseUpcomingEventInput,
-    options,
-  );
+  const queryOptions = getGetEventsUpcomingQueryOptions(params, options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;

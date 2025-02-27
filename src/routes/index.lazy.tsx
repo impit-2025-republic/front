@@ -1,10 +1,8 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { EventCard } from "../components/EventCardSmall";
 import { Badge } from "../components/catalyst/badge";
 import money from "/money.png";
 import { useState } from "react";
 import {
-  useGetEventsUpcoming,
   useGetUsersMe,
 } from "../api/endpoints/b8st-api";
 import CollectionCardLayout from "../components/CollectionCardLayout";
@@ -17,10 +15,8 @@ function RouteComponent() {
   const [screen, setScreen] = useState<'today' | 'tomorrow' | 'month' | 'week'>(
     'today'
   );
-  const { data } = useGetUsersMe(
-    
-  );
-  const { data: upcoming } = useGetEventsUpcoming({ period: screen });
+  const { data } = useGetUsersMe();
+
   return (
     <div className="flex flex-col gap-6 text-white">
       <div className="flex flex-row items-center justify-between">
@@ -79,10 +75,7 @@ function RouteComponent() {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <CollectionCardLayout/>
-          {upcoming?.events?.map((data: any, index: number) => {
-            return <EventCard key={index} data={data} />;
-          })}
+          <CollectionCardLayout period={screen}/>
         </div>
       </div>
     </div>
