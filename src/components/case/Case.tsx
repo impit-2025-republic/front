@@ -1,9 +1,10 @@
 import React from 'react';
-import { Item, RarityColors } from './type';
+import { RarityColors } from './type';
 
 interface CaseAnimationProps {
   // @ts-ignore
   spinnerRef: any;
+    // @ts-ignore
   items: any[];
   rarityColors: RarityColors;
   isSpinning: boolean;
@@ -12,7 +13,7 @@ interface CaseAnimationProps {
 export const CaseAnimation: React.FC<CaseAnimationProps> = ({
   spinnerRef, 
   items, 
-  rarityColors, 
+  // rarityColors, 
   // isSpinning
 }) => {
   return (

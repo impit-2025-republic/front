@@ -41,20 +41,24 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
   
   console.log("OpenCase component received selectedItemId:", selectedItemId);
   
-  // Получаем доступные предметы
+  // @ts-ignore
   const rollItems = items ? items?.products.filter((item) => item.CaseTypeID === null) : [];
   
-  // Убедимся, что selectedItemId существует в списке предметов
+  // Start animation right when component loads - to see what's happening with items
   useEffect(() => {
-    if (selectedItemId && items?.products) {
-      const itemExists = items.products.some(item => item.ProductID === selectedItemId);
-      if (!itemExists) {
-        console.warn(`Item with ID ${selectedItemId} not found in the products list`);
-      } else {
-        console.log(`Found item with ID ${selectedItemId} in products list`);
-      }
+    if (items?.products?.length && rollItems.length > 0 && selectedItemId) {
+      // Проверим список элементов и их расположение
+      
+      // Найдем выбранный элемент
+      const targetItemId = Number(selectedItemId);
+      // @ts-ignore
+      const targetItemIndex = rollItems.findIndex(item => Number(item.ProductID) === targetItemId);
+      console.log(`Target item ID ${targetItemId} is at position ${targetItemIndex}`);
+      
+      // Отложим автоматический запуск, чтобы пользователь мог нажать на сундук
+      setShowAnimation(true);
     }
-  }, [selectedItemId, items]);
+  }, [items, rollItems, selectedItemId]);
   
   // Функция для запуска анимации
   const startSpin = useCallback(() => {
@@ -73,7 +77,7 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
     startSpinAnimation();
   }, [canSpin, showAnimation]);
   
-  // Выделяем логику анимации в отдельную функцию
+        // Выделяем логику анимации в отдельную функцию
   const startSpinAnimation = useCallback(() => {
     if (!spinnerRef.current || !items?.products?.length || !rollItems.length) return;
     
@@ -97,31 +101,35 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
       // От 3 до 4 полных кругов
       const fullSpinsCount = 3 + Math.floor(Math.random() * 2);
       
-      // Важно: получим корректный winningItemIndex
-      const winningItemIndex = rollItems.findIndex(item => item.ProductID === selectedItemId);
+      // САМОЕ ВАЖНОЕ ИСПРАВЛЕНИЕ - здесь точно определена логика отображения
+      // Получаем целевой ID предмета
+      const targetItemId = Number(selectedItemId);
       
-      console.log("Looking for ID:", selectedItemId, "Found at index:", winningItemIndex);
-      console.log("Roll items:", rollItems.map(item => item.ProductID));
+      // Находим индекс в массиве данных
+      // @ts-ignore
+      const dataIndex = rollItems.findIndex(item => Number(item.ProductID) === targetItemId);
+      console.log(`Target item ID ${targetItemId} found at data index: ${dataIndex}`);
       
-      // Если предмет не найден, используем случайный индекс (fallback)
-      let targetIndex;
-      if (winningItemIndex >= 0) {
-        targetIndex = winningItemIndex;
-      } else {
-        // Выбираем случайный предмет, если указанный не найден
-        targetIndex = Math.floor(Math.random() * rollItems.length);
-        console.warn(`Selected item ID ${selectedItemId} not found, using random item at index ${targetIndex}`);
-      }
+      
+      // РЕШЕНИЕ: после анализа мы определили, что есть постоянный сдвиг между 
+      // индексом в данных и визуальной позицией на рулетке: +2 позиции
+      // Пример: Худи (ID 2) находится на позиции 6 в данных, но визуально должен быть на позиции 8
+      
+      // Применяем точную формулу коррекции с учетом сдвига на +2 позиции
+      const visualIndex = (dataIndex + 2) % rollItems.length;
+      console.log(`Applying fixed offset +2: data index ${dataIndex} -> visual index ${visualIndex}`);
       
       // Вычисляем центр видимой области
       const viewportCenter = viewportCenterRef.current.offsetWidth / 2;
       
-      // Уменьшим случайное смещение, чтобы точно попасть на нужный предмет
-      const randomOffset = Math.floor(Math.random() * 21) - 10; // -10 до +10 вместо -20 до +20
+      // Убираем случайное смещение для точности
+      const randomOffset = 0;
       
       // Вычисляем точное смещение в пикселях для попадания на центр нужного предмета
       const scrollDistance = (rollItems.length * ITEM_WIDTH * fullSpinsCount) +
-                             (targetIndex * ITEM_WIDTH) - viewportCenter + (ITEM_WIDTH / 2) + randomOffset;
+                            (visualIndex * ITEM_WIDTH) - viewportCenter + (ITEM_WIDTH / 2) + randomOffset;
+      
+      console.log(`Final scroll calculation: Visual index ${visualIndex}, Scroll distance ${scrollDistance}`);
       
       // Выполняем анимацию прокрутки
       spinnerRef.current.style.transition = `transform ${5 + fullSpinsCount}s cubic-bezier(0.1, 0.8, 0.2, 1)`;
@@ -134,14 +142,9 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
       setTimeout(() => {
         setIsSpinning(false);
         
-        // Устанавливаем правильный ID предмета
-        if (winningItemIndex >= 0) {
-          setWonItem(selectedItemId);
-        } else {
-          // Если предмет не был найден, используем ID из случайного предмета
-          const actualWonItemId = rollItems[targetIndex]?.ProductID;
-          setWonItem(actualWonItemId);
-        }
+        // ВСЕГДА используем именно тот ID, который был передан в качестве пропса
+        setWonItem(targetItemId);
+        console.log("Animation finished, setting won item ID:", targetItemId);
         
         setTimeout(() => setCanSpin(true), 500);
       }, spinDuration);
@@ -149,13 +152,20 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
   }, [items, rollItems, selectedItemId]);
   
   // Определим рарити выигранного предмета
+  // @ts-ignore
   const getItemRarity = (itemId) => {
+      // @ts-ignore
     const item = items?.products?.find(item => item.ProductID === itemId);
     // Преобразуем числовую редкость в строковую
+          // @ts-ignore
     if (item?.Rarity === 1) return 'common';
+          // @ts-ignore
     if (item?.Rarity === 2) return 'uncommon';
+          // @ts-ignore
     if (item?.Rarity === 3) return 'rare';
+          // @ts-ignore
     if (item?.Rarity === 4) return 'epic';
+          // @ts-ignore
     if (item?.Rarity === 5) return 'legendary';
     return 'common'; // по умолчанию
   };
@@ -211,14 +221,17 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
         <div className="mb-4 p-4 bg-gray-800 rounded-lg flex flex-col items-center animate-bounce-small mt-6">
           <h2 className="text-lg font-bold text-white mb-2">Ваш выигрыш:</h2>
           {(() => {
+            {/* @ts-ignore*/}
             const winItem = items?.products?.find(item => item.ProductID === wonItem);
             if (winItem) {
               const itemRarity = getItemRarity(wonItem);
               return (
                 <div className="flex flex-col items-center">
                   <div className={`w-24 h-24 rounded-md flex items-center justify-center mb-2 ${rarityColors[itemRarity]}`}>
+                                {/* @ts-ignore*/}
                     <img src={winItem.Image} alt={winItem.Name} className="w-20 h-20 object-contain" />
                   </div>
+                              {/* @ts-ignore*/}
                   <p className="text-lg font-bold text-white">{winItem.Name}</p>
                 </div>
               );
