@@ -2,12 +2,18 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { Avatar } from '../../components/catalyst/avatar'
 import achieve from "/achieve.png";
 import CaseAnimation from '../../components/Case';
+import { useGetUsersMe } from '../../api/endpoints/b8st-api';
+import { BronzeChestCard } from '../../components/NewCase';
 
 export const Route = createLazyFileRoute('/profile/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const {data, isLoading} = useGetUsersMe();
+  if (isLoading) {
+    return "Loading...";
+  }
   return (
   <div className='text-white flex flex-col gap-6'>
     <p className=' text-3xl'>Профиль</p>
@@ -15,7 +21,7 @@ function RouteComponent() {
       <Avatar className='w-12 h-12' />
       <div className='flex flex-col gap-2'>
         <p className='text-2xl leading-5'>
-          Охотин Иван
+          {data?.surname} {data?.name} {data?.l_surname}
         </p>
         <p className='text-[#B3B3B3] text-base'>Ген директор</p>
       </div>
@@ -29,6 +35,7 @@ function RouteComponent() {
         <p className='text-[#B3B3B3] text-base'>Витрина достижений</p>
       </div>
     </div>
+    <BronzeChestCard/>
     <CaseAnimation />
   </div>
 )
