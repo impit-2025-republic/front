@@ -84,14 +84,14 @@ export const CaseAnimation = () => {
       
       // Теперь вычисляем, какой предмет окажется под индикатором с учетом смещения
       // 1. Вычисляем, сколько полных эле ментов мы прокрутили
-      const fullItemsScrolled = Math.floor(scrollDistance / ITEM_WIDTH);
+      // const fullItemsScrolled = Math.floor(scrollDistance / ITEM_WIDTH);
       
       // 2. Вычисляем, какой номер элемента окажется под индикатором
       // Берем остаток от деления на длину массива предметов
-      const finalItemIndex = fullItemsScrolled % items.length;
+      // const finalItemIndex = fullItemsScrolled % items.length;
       
       // 3. Получаем итоговый предмет
-      const winningItem = items[finalItemIndex];
+      // const winningItem = items[finalItemIndex];
       
       // Выполняем анимацию прокрутки
       spinnerRef.current.style.transition = `transform ${5 + fullSpinsCount}s cubic-bezier(0.1, 0.8, 0.2, 1)`;

@@ -1,7 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { Avatar } from '../../components/catalyst/avatar'
 import achieve from "/achieve.png";
-import CaseAnimation from '../../components/Case';
 import { useGetUsersMe } from '../../api/endpoints/b8st-api';
 import { BronzeChestCard } from '../../components/NewCase';
 import OpenCase from '../../components/CaseOpen';
