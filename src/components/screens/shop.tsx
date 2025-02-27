@@ -9,13 +9,9 @@ import {
   Dialog,
   DialogActions,
   DialogBody,
-  DialogDescription,
   DialogTitle,
 } from "../catalyst/dialog";
-import { Field, Label } from "../catalyst/fieldset";
-import { Input } from "../catalyst/input";
 import { Button } from "../catalyst/button";
-import CaseAnimation from "../case/Case";
 import OpenCase from "../case/CaseOpen";
 
 export const Shop = () => {
@@ -25,6 +21,7 @@ export const Shop = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [winItem, setWinItem] = useState(null);
   
+  // @ts-ignore
   const onClick = (id) => {
     mutate(
       {
