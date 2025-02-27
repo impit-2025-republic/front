@@ -1,5 +1,4 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import money from "/money.png";
 import { useState } from "react";
 import { Transaction } from "../../components/transaction";
 import { WalletCard } from "../../components/Waillet";
