@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Transaction } from "../../components/transaction";
 import { WalletCard } from "../../components/Waillet";
 import { useGetUsersMe } from "../../api/endpoints/b8st-api";
+import { Shop } from "../../components/screens/shop";
 export const Route = createLazyFileRoute("/wallet/")({
   component: RouteComponent,
 });
@@ -36,7 +37,7 @@ function RouteComponent() {
               Магазин
             </p>
           </div>
-          <div
+          {/* <div
             className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "cart" ? "bg-[#3F3F46]" : ""}`}
             onClick={() => setScreen("cart")}
           >
@@ -45,10 +46,12 @@ function RouteComponent() {
             >
               Корзина
             </p>
-          </div>
+          </div> */}
         </div>
-        
-        <Transaction />
+        {
+          screen === "history" ? <Transaction />:<Shop />
+          
+        }
       </div>
     </div>
   );

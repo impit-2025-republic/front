@@ -2,8 +2,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { Avatar } from '../../components/catalyst/avatar'
 import achieve from "/achieve.png";
 import { useGetUsersMe } from '../../api/endpoints/b8st-api';
-import { BronzeChestCard } from '../../components/NewCase';
-import OpenCase from '../../components/case/CaseOpen';
+import { Button } from '../../components/catalyst/button';
 
 export const Route = createLazyFileRoute('/profile/')({
   component: RouteComponent,
@@ -35,8 +34,7 @@ function RouteComponent() {
         <p className='text-[#B3B3B3] text-base'>Витрина достижений</p>
       </div>
     </div>
-    <BronzeChestCard/>
-    <OpenCase/>
+    <Button children="Выйти" color='red' onClick={()=>localStorage.removeItem("token")} />
   </div>
 )
 }

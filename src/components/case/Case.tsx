@@ -4,11 +4,11 @@ import { Item, RarityColors } from './type';
 interface CaseAnimationProps {
   // @ts-ignore
   spinnerRef: any;
-  items: Item[];
+  items: any[];
   rarityColors: RarityColors;
   isSpinning: boolean;
 }
-
+//@ts-nocheck
 export const CaseAnimation: React.FC<CaseAnimationProps> = ({
   spinnerRef, 
   items, 
@@ -37,14 +37,14 @@ export const CaseAnimation: React.FC<CaseAnimationProps> = ({
               <React.Fragment key={`itemgroup-${outerIndex}`}>
                 {items.map((item, index) => (
                   <div 
-                    key={`${item.id}-${outerIndex}-${index}`}
+                    key={`${item.productID}-${outerIndex}-${index}`}
                     className="flex flex-col items-center justify-center p-2 w-24 h-24 border border-gray-700"
                     data-item-id={item.id}
                   >
-                    <div className={`w-16 h-16 ${rarityColors[item.rarity]} rounded-md flex items-center justify-center`}>
-                      <img src={item.image} alt={item.name} className="w-14 h-14 object-contain" />
+                    <div className={`w-16 h-16 rounded-md flex items-center justify-center`}>
+                      <img src={item.Image} alt={item.Name} className="w-14 h-14 object-contain" />
                     </div>
-                    <p className="text-xs text-white truncate mt-1">{item.name}</p>
+                    <p className="text-xs text-white truncate mt-1">{item.Name}</p>
                   </div>
                 ))}
               </React.Fragment>

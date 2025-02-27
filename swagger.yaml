@@ -97,10 +97,10 @@ definitions:
     type: object
   entities.Product:
     properties:
-      avalibility:
+      availability:
         type: integer
-      company:
-        $ref: '#/definitions/entities.Company'
+      caseTypeID:
+        type: integer
       companyID:
         type: integer
       description:
@@ -111,7 +111,24 @@ definitions:
         type: string
       price:
         type: number
+      productCategory:
+        type: string
       productID:
+        type: integer
+    type: object
+  entities.UserWalletHistory:
+    properties:
+      coin:
+        type: number
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      refillType:
+        type: string
+      userID:
         type: integer
     type: object
   usecase.AdminVisitEventInput:
@@ -121,6 +138,23 @@ definitions:
       eventID:
         type: integer
       userID:
+        type: integer
+    type: object
+  usecase.BuyProductInput:
+    properties:
+      productId:
+        type: integer
+      userID:
+        type: integer
+    type: object
+  usecase.CaseOpenInput:
+    properties:
+      productId:
+        type: integer
+    type: object
+  usecase.CaseOpenOutput:
+    properties:
+      productID:
         type: integer
     type: object
   usecase.ClosedEventsOutput:
@@ -166,6 +200,20 @@ definitions:
         type: string
       title:
         type: string
+    type: object
+  usecase.FindProductOutput:
+    properties:
+      products:
+        items:
+          $ref: '#/definitions/entities.Product'
+        type: array
+    type: object
+  usecase.GetMyHistoryWalletOutput:
+    properties:
+      transactions:
+        items:
+          $ref: '#/definitions/entities.UserWalletHistory'
+        type: array
     type: object
   usecase.LLMChatInput:
     properties:
@@ -337,6 +385,66 @@ paths:
       summary: login with telegram
       tags:
       - auth
+  /products:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usecase.FindProductOutput'
+        "500":
+          description: Internal Server Error
+      security:
+      - BearerAuth: []
+      summary: get products
+      tags:
+      - product
+  /products/buy:
+    post:
+      parameters:
+      - description: input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.BuyProductInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      security:
+      - BearerAuth: []
+      summary: buy product
+      tags:
+      - product
+  /products/open/case:
+    post:
+      parameters:
+      - description: input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.CaseOpenInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usecase.CaseOpenOutput'
+        "500":
+          description: Internal Server Error
+      security:
+      - BearerAuth: []
+      summary: case open
+      tags:
+      - product
   /users/me:
     get:
       produces:
@@ -351,6 +459,22 @@ paths:
       security:
       - BearerAuth: []
       summary: get user me
+      tags:
+      - user
+  /users/transactions:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/usecase.GetMyHistoryWalletOutput'
+        "500":
+          description: Internal Server Error
+      security:
+      - BearerAuth: []
+      summary: get my transaction
       tags:
       - user
 securityDefinitions:

@@ -22,7 +22,12 @@ import type {
   AiStreamResponse,
   GetEventsUpcomingParams,
   UsecaseAdminVisitEventInput,
+  UsecaseBuyProductInput,
+  UsecaseCaseOpenInput,
+  UsecaseCaseOpenOutput,
   UsecaseClosedEventsOutput,
+  UsecaseFindProductOutput,
+  UsecaseGetMyHistoryWalletOutput,
   UsecaseLLMChatInput,
   UsecaseLoginOutput,
   UsecaseUpcomingEventList,
@@ -648,6 +653,286 @@ export const usePostLogin = <
 };
 
 /**
+ * @summary get products
+ */
+export const getProducts = (signal?: AbortSignal) => {
+  return requestInstance<UsecaseFindProductOutput>({
+    url: `/products`,
+    method: "GET",
+    signal,
+  });
+};
+
+export const getGetProductsQueryKey = () => {
+  return [`/products`] as const;
+};
+
+export const getGetProductsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getProducts>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getProducts>>, TError, TData>
+  >;
+}) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetProductsQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getProducts>>> = ({
+    signal,
+  }) => getProducts(signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getProducts>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetProductsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getProducts>>
+>;
+export type GetProductsQueryError = ErrorType<void>;
+
+export function useGetProducts<
+  TData = Awaited<ReturnType<typeof getProducts>>,
+  TError = ErrorType<void>,
+>(options: {
+  query: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getProducts>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getProducts>>,
+        TError,
+        Awaited<ReturnType<typeof getProducts>>
+      >,
+      "initialData"
+    >;
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetProducts<
+  TData = Awaited<ReturnType<typeof getProducts>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getProducts>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getProducts>>,
+        TError,
+        Awaited<ReturnType<typeof getProducts>>
+      >,
+      "initialData"
+    >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetProducts<
+  TData = Awaited<ReturnType<typeof getProducts>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getProducts>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary get products
+ */
+
+export function useGetProducts<
+  TData = Awaited<ReturnType<typeof getProducts>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getProducts>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetProductsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
+/**
+ * @summary buy product
+ */
+export const postProductsBuy = (
+  usecaseBuyProductInput: UsecaseBuyProductInput,
+  signal?: AbortSignal,
+) => {
+  return requestInstance<void>({
+    url: `/products/buy`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    data: usecaseBuyProductInput,
+    signal,
+  });
+};
+
+export const getPostProductsBuyMutationOptions = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postProductsBuy>>,
+    TError,
+    { data: UsecaseBuyProductInput },
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postProductsBuy>>,
+  TError,
+  { data: UsecaseBuyProductInput },
+  TContext
+> => {
+  const mutationKey = ["postProductsBuy"];
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postProductsBuy>>,
+    { data: UsecaseBuyProductInput }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return postProductsBuy(data);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type PostProductsBuyMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postProductsBuy>>
+>;
+export type PostProductsBuyMutationBody = UsecaseBuyProductInput;
+export type PostProductsBuyMutationError = ErrorType<void>;
+
+/**
+ * @summary buy product
+ */
+export const usePostProductsBuy = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postProductsBuy>>,
+    TError,
+    { data: UsecaseBuyProductInput },
+    TContext
+  >;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postProductsBuy>>,
+  TError,
+  { data: UsecaseBuyProductInput },
+  TContext
+> => {
+  const mutationOptions = getPostProductsBuyMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+
+/**
+ * @summary case open
+ */
+export const postProductsOpenCase = (
+  usecaseCaseOpenInput: UsecaseCaseOpenInput,
+  signal?: AbortSignal,
+) => {
+  return requestInstance<UsecaseCaseOpenOutput>({
+    url: `/products/open/case`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    data: usecaseCaseOpenInput,
+    signal,
+  });
+};
+
+export const getPostProductsOpenCaseMutationOptions = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postProductsOpenCase>>,
+    TError,
+    { data: UsecaseCaseOpenInput },
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postProductsOpenCase>>,
+  TError,
+  { data: UsecaseCaseOpenInput },
+  TContext
+> => {
+  const mutationKey = ["postProductsOpenCase"];
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postProductsOpenCase>>,
+    { data: UsecaseCaseOpenInput }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return postProductsOpenCase(data);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type PostProductsOpenCaseMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postProductsOpenCase>>
+>;
+export type PostProductsOpenCaseMutationBody = UsecaseCaseOpenInput;
+export type PostProductsOpenCaseMutationError = ErrorType<void>;
+
+/**
+ * @summary case open
+ */
+export const usePostProductsOpenCase = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postProductsOpenCase>>,
+    TError,
+    { data: UsecaseCaseOpenInput },
+    TContext
+  >;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postProductsOpenCase>>,
+  TError,
+  { data: UsecaseCaseOpenInput },
+  TContext
+> => {
+  const mutationOptions = getPostProductsOpenCaseMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+
+/**
  * @summary get user me
  */
 export const getUsersMe = (signal?: AbortSignal) => {
@@ -751,6 +1036,140 @@ export function useGetUsersMe<
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
   const queryOptions = getGetUsersMeQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
+/**
+ * @summary get my transaction
+ */
+export const getUsersTransactions = (signal?: AbortSignal) => {
+  return requestInstance<UsecaseGetMyHistoryWalletOutput>({
+    url: `/users/transactions`,
+    method: "GET",
+    signal,
+  });
+};
+
+export const getGetUsersTransactionsQueryKey = () => {
+  return [`/users/transactions`] as const;
+};
+
+export const getGetUsersTransactionsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getUsersTransactions>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getUsersTransactions>>,
+      TError,
+      TData
+    >
+  >;
+}) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetUsersTransactionsQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getUsersTransactions>>
+  > = ({ signal }) => getUsersTransactions(signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getUsersTransactions>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetUsersTransactionsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getUsersTransactions>>
+>;
+export type GetUsersTransactionsQueryError = ErrorType<void>;
+
+export function useGetUsersTransactions<
+  TData = Awaited<ReturnType<typeof getUsersTransactions>>,
+  TError = ErrorType<void>,
+>(options: {
+  query: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getUsersTransactions>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUsersTransactions>>,
+        TError,
+        Awaited<ReturnType<typeof getUsersTransactions>>
+      >,
+      "initialData"
+    >;
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetUsersTransactions<
+  TData = Awaited<ReturnType<typeof getUsersTransactions>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getUsersTransactions>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUsersTransactions>>,
+        TError,
+        Awaited<ReturnType<typeof getUsersTransactions>>
+      >,
+      "initialData"
+    >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetUsersTransactions<
+  TData = Awaited<ReturnType<typeof getUsersTransactions>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getUsersTransactions>>,
+      TError,
+      TData
+    >
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary get my transaction
+ */
+
+export function useGetUsersTransactions<
+  TData = Awaited<ReturnType<typeof getUsersTransactions>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getUsersTransactions>>,
+      TError,
+      TData
+    >
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetUsersTransactionsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;

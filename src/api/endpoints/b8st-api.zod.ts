@@ -37,13 +37,14 @@ export const getEventsArchivedResponse = zod.object({
   "events": zod.array(zod.any()).optional(),
   "logo": zod.string().optional(),
   "products": zod.array(zod.object({
-  "avalibility": zod.number().optional(),
-  "company": zod.any().optional(),
+  "availability": zod.number().optional(),
+  "caseTypeID": zod.number().optional(),
   "companyID": zod.number().optional(),
   "description": zod.string().optional(),
   "image": zod.string().optional(),
   "name": zod.string().optional(),
   "price": zod.number().optional(),
+  "productCategory": zod.string().optional(),
   "productID": zod.number().optional()
 })).optional(),
   "title": zod.string().optional()
@@ -86,13 +87,14 @@ export const getEventsUpcomingResponse = zod.object({
   "events": zod.array(zod.any()).optional(),
   "logo": zod.string().optional(),
   "products": zod.array(zod.object({
-  "avalibility": zod.number().optional(),
-  "company": zod.any().optional(),
+  "availability": zod.number().optional(),
+  "caseTypeID": zod.number().optional(),
   "companyID": zod.number().optional(),
   "description": zod.string().optional(),
   "image": zod.string().optional(),
   "name": zod.string().optional(),
   "price": zod.number().optional(),
+  "productCategory": zod.string().optional(),
   "productID": zod.number().optional()
 })).optional(),
   "title": zod.string().optional()
@@ -142,13 +144,14 @@ export const getEventsUpcomingResponse = zod.object({
 })).optional(),
   "logo": zod.string().optional(),
   "products": zod.array(zod.object({
-  "avalibility": zod.number().optional(),
-  "company": zod.any().optional(),
+  "availability": zod.number().optional(),
+  "caseTypeID": zod.number().optional(),
   "companyID": zod.number().optional(),
   "description": zod.string().optional(),
   "image": zod.string().optional(),
   "name": zod.string().optional(),
   "price": zod.number().optional(),
+  "productCategory": zod.string().optional(),
   "productID": zod.number().optional()
 })).optional(),
   "title": zod.string().optional()
@@ -211,6 +214,45 @@ export const postLoginResponse = zod.object({
 
 
 /**
+ * @summary get products
+ */
+export const getProductsResponse = zod.object({
+  "products": zod.array(zod.object({
+  "availability": zod.number().optional(),
+  "caseTypeID": zod.number().optional(),
+  "companyID": zod.number().optional(),
+  "description": zod.string().optional(),
+  "image": zod.string().optional(),
+  "name": zod.string().optional(),
+  "price": zod.number().optional(),
+  "productCategory": zod.string().optional(),
+  "productID": zod.number().optional()
+})).optional()
+})
+
+
+/**
+ * @summary buy product
+ */
+export const postProductsBuyBody = zod.object({
+  "productId": zod.number().optional(),
+  "userID": zod.number().optional()
+})
+
+
+/**
+ * @summary case open
+ */
+export const postProductsOpenCaseBody = zod.object({
+  "productId": zod.number().optional()
+})
+
+export const postProductsOpenCaseResponse = zod.object({
+  "productID": zod.number().optional()
+})
+
+
+/**
  * @summary get user me
  */
 export const getUsersMeResponse = zod.object({
@@ -232,13 +274,14 @@ export const getUsersMeResponse = zod.object({
   "events": zod.array(zod.any()).optional(),
   "logo": zod.string().optional(),
   "products": zod.array(zod.object({
-  "avalibility": zod.number().optional(),
-  "company": zod.any().optional(),
+  "availability": zod.number().optional(),
+  "caseTypeID": zod.number().optional(),
   "companyID": zod.number().optional(),
   "description": zod.string().optional(),
   "image": zod.string().optional(),
   "name": zod.string().optional(),
   "price": zod.number().optional(),
+  "productCategory": zod.string().optional(),
   "productID": zod.number().optional()
 })).optional(),
   "title": zod.string().optional()
@@ -261,6 +304,21 @@ export const getUsersMeResponse = zod.object({
   "phone": zod.string().optional(),
   "surname": zod.string().optional(),
   "user_id": zod.number().optional()
+})
+
+
+/**
+ * @summary get my transaction
+ */
+export const getUsersTransactionsResponse = zod.object({
+  "transactions": zod.array(zod.object({
+  "coin": zod.number().optional(),
+  "createdAt": zod.string().optional(),
+  "description": zod.string().optional(),
+  "id": zod.number().optional(),
+  "refillType": zod.string().optional(),
+  "userID": zod.number().optional()
+})).optional()
 })
 
 

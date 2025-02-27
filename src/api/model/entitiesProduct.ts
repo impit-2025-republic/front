@@ -4,15 +4,15 @@
  * B8boost API
  * OpenAPI spec version: 1.0
  */
-import type { EntitiesCompany } from "./entitiesCompany";
 
 export interface EntitiesProduct {
-  avalibility?: number;
-  company?: EntitiesCompany;
+  availability?: number;
+  caseTypeID?: number;
   companyID?: number;
   description?: string;
   image?: string;
   name?: string;
   price?: number;
+  productCategory?: string;
   productID?: number;
 }
