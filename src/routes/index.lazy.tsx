@@ -7,6 +7,7 @@ import {
   useGetEventsUpcoming,
   useGetUsersMe,
 } from "../api/endpoints/b8st-api";
+import CollectionCardLayout from "../components/CollectionCardLayout";
 // import { initData } from "@telegram-apps/sdk-react";
 export const Route = createLazyFileRoute("/")({
   component: RouteComponent,
@@ -76,6 +77,7 @@ function RouteComponent() {
           </div>
         </div>
         <div className="flex flex-col gap-2">
+          <CollectionCardLayout/>
           {upcoming?.events?.map((data: any, index: number) => {
             return <EventCard key={index} data={data} />;
           })}

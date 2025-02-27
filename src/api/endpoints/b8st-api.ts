@@ -253,7 +253,6 @@ export function useGetEventsArchived<
  * @summary get upcoming events
  */
 export const getEventsUpcoming = (
-  //@ts-ignore
   usecaseUpcomingEventInput: UsecaseUpcomingEventInput,
   signal?: AbortSignal,
 ) => {
