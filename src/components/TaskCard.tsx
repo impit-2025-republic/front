@@ -9,6 +9,7 @@ interface TaskCardProps {
   statusText?: string;
   coins?: number;
   onClick?: () => void;
+  is_registered?:boolean;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({
@@ -18,7 +19,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
   status = 'active',
   statusText = 'Идет',
   coins = 15,
-  onClick
+  onClick,
+  is_registered
 }) => {
   // Функция для форматирования даты на русском языке
   const formatDate = (dateInput: string | Date): string => {
@@ -92,7 +94,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
     return `${date.getDate()} ${months[date.getMonth()]} ${dateYear}г.`;
   };
   return (
-    <div className="flex flex-col bg-[#26282C] rounded-3xl p-3 w-full max-w-[212px] h-[260px]">
+    <div className="flex flex-col bg-[#26282C] rounded-3xl p-3 w-full h-fit">
       {/* Top section with coins */}
       <div className="flex flex-col gap-4 flex-1">
         <div className="flex flex-row">
@@ -129,10 +131,12 @@ const TaskCard: React.FC<TaskCardProps> = ({
         </div>
 
         <button 
+          disabled={is_registered}
           onClick={onClick}
           className="w-full py-4 px-4 bg-[#3F3F46] rounded-3xl text-white text-base font-medium hover:bg-[#4B4B52] transition-colors"
         >
-          Участвовать
+          {is_registered === false ? "Участвовать" : "Вы участвуете"}
+          {/* Участвовать */}
         </button>
       </div>
     </div>
