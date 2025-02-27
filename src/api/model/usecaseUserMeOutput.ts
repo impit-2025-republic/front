@@ -4,10 +4,12 @@
  * B8boost API
  * OpenAPI spec version: 1.0
  */
+import type { UsecaseUserWinnings } from "./usecaseUserWinnings";
 import type { EntitiesEvent } from "./entitiesEvent";
 
 export interface UsecaseUserMeOutput {
   birth_date?: string;
+  buys?: UsecaseUserWinnings[];
   coin?: number;
   email?: string;
   events?: EntitiesEvent[];

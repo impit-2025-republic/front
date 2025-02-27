@@ -257,6 +257,29 @@ export const postProductsOpenCaseResponse = zod.object({
  */
 export const getUsersMeResponse = zod.object({
   "birth_date": zod.string().optional(),
+  "buys": zod.array(zod.object({
+  "buy": zod.object({
+  "delivered": zod.boolean().optional(),
+  "deliveredAt": zod.string().optional(),
+  "deliveredBy": zod.number().optional(),
+  "productID": zod.number().optional(),
+  "userID": zod.number().optional(),
+  "userWinningID": zod.number().optional(),
+  "winType": zod.string().optional(),
+  "wonAt": zod.string().optional()
+}).optional(),
+  "product": zod.object({
+  "availability": zod.number().optional(),
+  "caseTypeID": zod.number().optional(),
+  "companyID": zod.number().optional(),
+  "description": zod.string().optional(),
+  "image": zod.string().optional(),
+  "name": zod.string().optional(),
+  "price": zod.number().optional(),
+  "productCategory": zod.string().optional(),
+  "productID": zod.number().optional()
+}).optional()
+})).optional(),
   "coin": zod.number().optional(),
   "email": zod.string().optional(),
   "events": zod.array(zod.object({
@@ -313,9 +336,7 @@ export const getUsersMeResponse = zod.object({
 export const getUsersTransactionsResponse = zod.object({
   "transactions": zod.array(zod.object({
   "coin": zod.number().optional(),
-  "createdAt": zod.string().optional(),
   "description": zod.string().optional(),
-  "id": zod.number().optional(),
   "refillType": zod.string().optional(),
   "userID": zod.number().optional()
 })).optional()

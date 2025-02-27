@@ -7,9 +7,7 @@
 
 export interface EntitiesUserWalletHistory {
   coin?: number;
-  createdAt?: string;
   description?: string;
-  id?: number;
   refillType?: string;
   userID?: number;
 }
