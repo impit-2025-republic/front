@@ -9,13 +9,10 @@ interface WalletCardProps {
 
 export const WalletCard: React.FC<WalletCardProps> = ({
   balance = 52,
-  walletName = "Основной кошелек",
-  onRefresh,
-  onWalletSelect,
 }) => {
   return (
     <div className="bg-[#26282c] rounded-[32px] p-4 w-[326px]">
-      <div className="flex justify-between items-center mb-4">
+      {/* <div className="flex justify-between items-center mb-4">
         <button 
           onClick={onRefresh}
           className="w-9 h-9 bg-[#3f3f46] rounded-full flex items-center justify-center hover:bg-[#4b4b52] transition-colors"
@@ -37,7 +34,7 @@ export const WalletCard: React.FC<WalletCardProps> = ({
         >
           <img src="https://dashboard.codeparrot.ai/api/image/Z7-73THFtJnMrSZb/heroicon-3.png" alt="refresh" className="w-5 h-5" />
         </button>
-      </div>
+      </div> */}
 
       <div className="flex items-center justify-center gap-3">
         <div className="w-8 h-8 bg-[#f59e0b] rounded-full flex items-center justify-center">
