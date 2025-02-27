@@ -14,7 +14,7 @@ export const BronzeChestCard: React.FC<BronzeChestCardProps> = ({
   onBuy
 }) => {
   return (
-    <div className="adaptive-card relative w-[171px] flex flex-col p-2 bg-[#26282c] rounded-3xl">
+    <div className="adaptive-card relative w-[171px] flex flex-col p-2 bg-gradient-to-b from-[#26282c] to-[#1f2023] rounded-3xl">
       {/* Top decorative image */}
       <div className="absolute -top-7 left-[19px]">
         <img src="https://dashboard.codeparrot.ai/api/image/Z7-1NHujdTjvjCCn/group-44.png" alt="" className="w-[170px] h-[98px]" />
@@ -54,4 +54,3 @@ export const BronzeChestCard: React.FC<BronzeChestCardProps> = ({
     </div>
   );
 }
-
