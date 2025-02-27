@@ -2,19 +2,19 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import money from "/money.png";
 import { useState } from "react";
 import { Transaction } from "../../components/transaction";
+import { WalletCard } from "../../components/Waillet";
+import { useGetUsersMe } from "../../api/endpoints/b8st-api";
 export const Route = createLazyFileRoute("/wallet/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const {data, isLoading} = useGetUsersMe();
   const [screen, setScreen] = useState("history");
   return (
     <div className="text-white flex flex-col gap-6">
       <p className="text-3xl">Кошелек</p>
-      <div className="bg-[#26282C] flex flex-row gap-2 py-4 items-center justify-center">
-        <img src={money} width={48} height={48} />
-        <p className="text-5xl font-medium">100</p>
-      </div>
+      <WalletCard balance={isLoading ? 0 :( data?.coin ?  data?.coin :  0)}/>
       <div className="flex flex-col">
         <div className="bg-[#26282C] flex flex-row flex-1 gap-1 p-1 rounded-2xl">
           <div
