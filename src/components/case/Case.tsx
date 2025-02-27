@@ -53,7 +53,7 @@ export const CaseAnimation: React.FC<CaseAnimationProps> = ({
         </div>
       </div>
       
-      {/* Стили для анимации */}
+      {/* @ts-ignore */}
       <style jsx>{`
         @keyframes bounce-small {
           0%, 100% {
