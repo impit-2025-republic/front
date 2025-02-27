@@ -261,6 +261,7 @@ export const getEventsUpcoming = (
     method: "GET",
     headers: { "Content-Type": "application/json" },
     signal,
+    data: usecaseUpcomingEventInput,
   });
 };
 

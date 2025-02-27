@@ -17,7 +17,9 @@ function RouteComponent() {
   const [screen, setScreen] = useState<'today' | 'tomorrow' | 'month' | 'week'>(
     'today'
   );
-  const { data } = useGetUsersMe();
+  const { data } = useGetUsersMe(
+    
+  );
   const { data: upcoming } = useGetEventsUpcoming({ period: screen });
   return (
     <div className="flex flex-col gap-6 text-white">
