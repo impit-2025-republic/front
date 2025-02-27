@@ -23,9 +23,9 @@ export const rarityColors: RarityColors = {
   legendary: 'bg-yellow-500'
 };
 
-interface OpenCaseProps {
-  onOpen?: () => void;
-}
+// interface OpenCaseProps {
+//   onOpen?: () => void;
+// }
 
 // Генерация тестовых предметов
 const generateItems = (): Item[] => {
@@ -45,7 +45,7 @@ const generateItems = (): Item[] => {
   return items;
 };
 
-const OpenCase: React.FC<OpenCaseProps> = ({ onOpen }) => {
+const OpenCase = () => {
   const [items] = useState<Item[]>(generateItems());
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
@@ -123,14 +123,14 @@ const OpenCase: React.FC<OpenCaseProps> = ({ onOpen }) => {
         setIsSpinning(false);
         setSelectedItemId(winningItem.id);
         
-        if (onOpen) {
-          onOpen();
-        }
+        // if (onOpen) {
+        //   onOpen();
+        // }
         
         setTimeout(() => setCanSpin(true), 500);
       }, spinDuration);
     }, 50);
-  }, [items, onOpen]);
+  }, [items]);
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-[#191b1f] p-6">

@@ -3,7 +3,7 @@ import { Avatar } from '../../components/catalyst/avatar'
 import achieve from "/achieve.png";
 import { useGetUsersMe } from '../../api/endpoints/b8st-api';
 import { BronzeChestCard } from '../../components/NewCase';
-import OpenCase from '../../components/CaseOpen';
+import OpenCase from '../../components/case/CaseOpen';
 
 export const Route = createLazyFileRoute('/profile/')({
   component: RouteComponent,
