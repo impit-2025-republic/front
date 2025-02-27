@@ -40,7 +40,8 @@ const generateItems = (): Item[] => {
 export const CaseAnimation = () => {
   const [items] = useState<Item[]>(generateItems());
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
-  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+  // // @ts-ignore
+  // const [_, setSelectedItemId] = useState<number | null>(null);
   const spinnerRef = useRef<HTMLDivElement>(null);
   const [canSpin, setCanSpin] = useState<boolean>(true);
   
@@ -51,7 +52,7 @@ export const CaseAnimation = () => {
     if (!canSpin || !spinnerRef.current) return;
     
     setIsSpinning(true);
-    setSelectedItemId(null);
+    // setSelectedItemId(null);
     setCanSpin(false);
     
     // Сбрасываем позицию прокрутки
@@ -102,15 +103,15 @@ export const CaseAnimation = () => {
       // После того, как анимация закончится, показываем выигрыш
       setTimeout(() => {
         setIsSpinning(false);
-        setSelectedItemId(winningItem.id);
+        // setSelectedItemId(winningItem.id);
         setTimeout(() => setCanSpin(true), 500);
       }, spinDuration);
     }, 50);
   };
   
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-4xl mx-auto p-4 bg-gray-900 rounded-lg">
-      <h1 className="text-2xl font-bold mb-4 text-white">Открытие кейса</h1>
+    <div className="flex flex-col items-center justify-center w-full max-w-4xl mx-auto p-4rounded-lg">
+      {/* <h1 className="text-2xl font-bold mb-4 text-white">Открытие кейса</h1> */}
       
       {/* Контейнер для прокрутки с центральным индикатором */}
       <div className="relative w-full mb-6">
@@ -119,8 +120,8 @@ export const CaseAnimation = () => {
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-24 bg-red-600 z-20"></div>
           
           {/* Подсветка выбора */}
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-24 border-2 border-yellow-400 border-opacity-70 z-10"></div>
-          
+          {/* <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-24 border-2 border-yellow-400 border-opacity-70 z-10"></div>
+           */}
           {/* Контейнер со всеми предметами */}
           <div 
             ref={spinnerRef} 
@@ -153,7 +154,7 @@ export const CaseAnimation = () => {
       </div>
       
       {/* Выигранный предмет */}
-      {selectedItemId && (
+      {/* {selectedItemId && (
         <div className="mb-4 p-4 bg-gray-800 rounded-lg flex flex-col items-center animate-bounce-small">
           <h2 className="text-lg font-bold text-white mb-2">Ваш выигрыш:</h2>
           {(() => {
@@ -180,34 +181,7 @@ export const CaseAnimation = () => {
             return null;
           })()}
         </div>
-      )}
-      
-      {/* Статистика редкости предметов */}
-      <div className="w-full mt-4 mb-4 p-4 bg-gray-800 rounded-lg">
-        <h3 className="text-white text-lg font-bold mb-2">Шансы выпадения:</h3>
-        <div className="flex flex-wrap justify-between">
-          <div className="flex items-center mb-2">
-            <div className="w-4 h-4 bg-gray-400 rounded-sm mr-2"></div>
-            <span className="text-gray-300">Обычный: 20%</span>
-          </div>
-          <div className="flex items-center mb-2">
-            <div className="w-4 h-4 bg-blue-500 rounded-sm mr-2"></div>
-            <span className="text-gray-300">Необычный: 20%</span>
-          </div>
-          <div className="flex items-center mb-2">
-            <div className="w-4 h-4 bg-purple-600 rounded-sm mr-2"></div>
-            <span className="text-gray-300">Редкий: 20%</span>
-          </div>
-          <div className="flex items-center mb-2">
-            <div className="w-4 h-4 bg-pink-600 rounded-sm mr-2"></div>
-            <span className="text-gray-300">Эпический: 20%</span>
-          </div>
-          <div className="flex items-center mb-2">
-            <div className="w-4 h-4 bg-yellow-500 rounded-sm mr-2"></div>
-            <span className="text-gray-300">Легендарный: 20%</span>
-          </div>
-        </div>
-      </div>
+      )} */}
       
       {/* Кнопка для запуска */}
       <button

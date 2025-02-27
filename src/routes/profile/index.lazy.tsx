@@ -4,6 +4,7 @@ import achieve from "/achieve.png";
 import CaseAnimation from '../../components/Case';
 import { useGetUsersMe } from '../../api/endpoints/b8st-api';
 import { BronzeChestCard } from '../../components/NewCase';
+import OpenCase from '../../components/CaseOpen';
 
 export const Route = createLazyFileRoute('/profile/')({
   component: RouteComponent,
@@ -36,7 +37,7 @@ function RouteComponent() {
       </div>
     </div>
     <BronzeChestCard/>
-    <CaseAnimation />
+    <OpenCase/>
   </div>
 )
 }
