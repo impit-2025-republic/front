@@ -35,6 +35,7 @@ export const Shop = () => {
             // Log the response to see what we're actually getting
             console.log("Open case response:", data);
             // Make sure we're using the correct property name and type
+            //@ts-ignore
             const productId = data.productID || data.ProductID || data.id || data.ID;
             console.log("Setting winItem to:", productId);
             setWinItem(productId);
@@ -45,7 +46,7 @@ export const Shop = () => {
     );
   };
   
-  const onBuy = (id) => {
+  const onBuy = (id: any) => {
     buy({
       data: {
         productId: id,
@@ -58,11 +59,15 @@ export const Shop = () => {
       {data?.products?.map((data, index) => {
         return (
           <BronzeChestCard
-            data={data}
+          //@ts-ignore  
+          data={data}
             key={index}
             onBuy={() => {
+          //@ts-ignore  
               data.CaseTypeID !== null 
+          //@ts-ignore  
                 ? onClick(data.ProductID) 
+          //@ts-ignore  
                 : onBuy(data.ProductID);
             }}
           />
