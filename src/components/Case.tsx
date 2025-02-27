@@ -10,7 +10,7 @@ import React from 'react';
 
 
 // @ts-ignore
-export const CaseAnimation = ({spinnerRef, items, rarityColors} : any) => {
+export const CaseAnimation = ({spinnerRef, items, rarityColors, isSpinning} : any) => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-4xl mx-auto p-4rounded-lg">
@@ -20,7 +20,8 @@ export const CaseAnimation = ({spinnerRef, items, rarityColors} : any) => {
       <div className="relative w-full mb-6">
         <div className="relative w-full overflow-hidden h-24 bg-gray-800 rounded-lg">
           {/* Центральный индикатор */}
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-24 bg-red-600 z-20"></div>
+          {isSpinning ||   <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-24 bg-red-600 z-20"/>}
+        
           
           {/* Подсветка выбора */}
           {/* <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-24 border-2 border-yellow-400 border-opacity-70 z-10"></div>
@@ -34,8 +35,9 @@ export const CaseAnimation = ({spinnerRef, items, rarityColors} : any) => {
               willChange: 'transform'
             }}
           >
+            
             {/* Дублируем предметы для создания иллюзии бесконечной прокрутки */}
-            {Array(5).fill(null).map((_, outerIndex) => (
+            {isSpinning || Array(5).fill(null).map((_, outerIndex) => (
               // Используем React.Fragment и key для правильного рендеринга массива
               <React.Fragment key={`itemgroup-${outerIndex}`}>
                 {/*@ts-ignore*/}

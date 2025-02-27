@@ -143,8 +143,7 @@ const OpenCase: React.FC<BronzeChestProps> = () => {
           />
         </button>
       </div>
-
-      {isSpinning ? <CaseAnimation spinnerRef={spinnerRef} items={items} rarityColors={rarityColors}/> : <></>}
+      <CaseAnimation spinnerRef={spinnerRef} items={items} rarityColors={rarityColors} isSpinning={isSpinning}/>
     </div>
   );
 };
