@@ -1,4 +1,5 @@
 import React from 'react';
+import coin from "/money.png";
 
 interface TaskCardProps {
   title?: string;
@@ -98,7 +99,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
         <div className="flex flex-row">
           <div className="flex flex-row items-center gap-1 px-3 py-2 bg-[#3F3F46] rounded-2xl">
             <img 
-              src="https://dashboard.codeparrot.ai/api/image/Z7-5IjHFtJnMrSZV/subtract.png" 
+              src={coin}
               alt="coin"
               className="w-4 h-4"
             />

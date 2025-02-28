@@ -1,11 +1,12 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { Avatar } from "../../components/catalyst/avatar";
-import { useGetUsersMe } from "../../api/endpoints/b8st-api";
+import { useGetUsersMe, useGetUsersTop } from "../../api/endpoints/b8st-api";
 import { Button } from "../../components/catalyst/button";
 import { useState } from "react";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/solid";
 import { BronzeChestCard } from "../../components/LastBoughtCard";
 import CollectionCardLayout from "../../components/LastCollectionCardLayout";
+import { OneEightyRing } from "react-svg-spinners";
 
 export const Route = createLazyFileRoute("/profile/")({
   component: RouteComponent,
@@ -13,10 +14,9 @@ export const Route = createLazyFileRoute("/profile/")({
 
 function RouteComponent() {
   const { data, isLoading } = useGetUsersMe();
+  const {data:ratingdata, isLoading:loadingbruh} = useGetUsersTop()
   const [screen, setScreen] = useState("events");
-  if (isLoading) {
-    return "Loading...";
-  }
+  if (isLoading)return<div className="w-full h-full flex items-center justify-center"><OneEightyRing width={100} height={100} color="#fff" /> </div>
   return (
     <div className="text-white flex flex-col gap-6 mt-6">
       <div className="flex flex-col gap-4 items-center bg-[#26282C] w-[330px] p-3 rounded-3xl">
@@ -67,6 +67,16 @@ function RouteComponent() {
           </p>
         </div>
         <div
+          className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "rating" ? "bg-[#3F3F46]" : ""}`}
+          onClick={() => setScreen("rating")}
+        >
+          <p
+            className={`text-sm tracking-[-3%] font-medium  ${screen === "rating" ? "text-white" : " text-[#757575]"}`}
+          >
+            Рейтинг
+          </p>
+        </div>
+        <div
           className={` flex-1 items-center justify-center text-center py-[10px] rounded-[12px] ${screen === "shop" ? "bg-[#3F3F46]" : ""}`}
           onClick={() => setScreen("shop")}
         >
@@ -77,7 +87,14 @@ function RouteComponent() {
           </p>
         </div>
       </div>
-      <div className={`${screen === "shop" ?"grid grid-cols-2 gap-4" :""}`}>
+      <div className={`${screen === "shop" ?"grid grid-cols-2 gap-4" :screen === "rating" ?"flex flex-col gap-2" :""}`}>
+        {screen === "rating" ? <div className="flex flex-row gap-2 justify-between items-center">
+          <p>Место</p>
+          <p>Имя</p>
+          <p>Количество денег</p>
+
+        </div> : null}
+        {(loadingbruh === true)&&(screen==="rating") ?<div className="w-full h-full items-center justify-center flex"> <OneEightyRing width={100} height={100} color="#fff" /></div>:null}
         {
           screen === "shop" ? data?.buys?.map((data,index)=>{
             return (
@@ -96,13 +113,21 @@ function RouteComponent() {
                         }}
                       />
                     );
-          }): data?.events?.map((data,index)=>{
+                    {/*@ts-ignore*/}
+          }) : screen === "events" ? <CollectionCardLayout upcoming={data.events}/>
+          : screen === 'rating'? ratingdata?.wallets?.map((data,index)=>{
             return(
-              // @ts-ignore
-              <CollectionCardLayout key={index} period={data}/>
-
+              <div className="flex flex-row gap-2 items-center bg-[#3F3F46] p-2 rounded-2xl justify-between" key={index}>
+                <p>{index+1}</p>
+                {/*@ts-ignore */}
+                <p>{data?.user?.Surname+" "+data?.user?.Name}</p>
+                {/*@ts-ignore */}
+                <p>{data?.wallet?.Price}</p>
+              </div>
             )
           })
+          :null
+          
         }
       </div>
     </div>

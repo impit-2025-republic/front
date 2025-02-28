@@ -5,9 +5,10 @@ import {
   usePostEventsVisit,
 } from "../api/endpoints/b8st-api";
 import { useQueryClient } from "@tanstack/react-query";
+import { OneEightyRing } from "react-svg-spinners";
 
 const CollectionCardLayout = ({ period }: { period: string }) => {
-  const { data: upcoming } = useGetEventsUpcoming({ period });
+  const { data: upcoming, isLoading } = useGetEventsUpcoming({ period });
   const { mutate } = usePostEventsVisit();
   const keyFromQuery = getGetEventsUpcomingQueryKey();
   const queryClient = useQueryClient();
@@ -33,6 +34,7 @@ const CollectionCardLayout = ({ period }: { period: string }) => {
     ? //@ts-ignore
       upcoming?.events?.filter((data) => data.EventType === "task")
     : [];
+    if (isLoading)return<div className="w-full h-full flex items-center justify-center"><OneEightyRing width={100} height={100} color="#fff" /> </div>
   return (
     <div className="flex flex-col w-full gap-2 p-4">
       {/* @ts-ignore */}

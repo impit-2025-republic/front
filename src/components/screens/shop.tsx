@@ -13,9 +13,10 @@ import {
 } from "../catalyst/dialog";
 import { Button } from "../catalyst/button";
 import OpenCase from "../case/CaseOpen";
+import { OneEightyRing } from "react-svg-spinners";
 
 export const Shop = () => {
-  const { data } = useGetProducts();
+  const { data, isLoading } = useGetProducts();
   const { mutate } = usePostProductsOpenCase();
   const { mutate: buy } = usePostProductsBuy();
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +54,7 @@ export const Shop = () => {
       },
     });
   };
-  
+  if (isLoading)return<div className="w-full h-full flex items-center justify-center"><OneEightyRing width={100} height={100} color="#fff" /> </div>
   return (
     <div className="grid grid-cols-2 gap-2 mt-2">
       {data?.products?.map((data, index) => {

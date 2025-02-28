@@ -331,6 +331,38 @@ export const getUsersMeResponse = zod.object({
 
 
 /**
+ * @summary get top balance
+ */
+export const getUsersTopResponse = zod.object({
+  "wallets": zod.array(zod.object({
+  "user": zod.object({
+  "avatar": zod.string().optional(),
+  "birthDate": zod.string().optional(),
+  "companyID": zod.number().optional(),
+  "createdAt": zod.string().optional(),
+  "description": zod.string().optional(),
+  "email": zod.string().optional(),
+  "isOnline": zod.boolean().optional(),
+  "lastLogin": zod.string().optional(),
+  "lastSurname": zod.string().optional(),
+  "ldapID": zod.string().optional(),
+  "name": zod.string().optional(),
+  "phone": zod.string().optional(),
+  "role": zod.string().optional(),
+  "surname": zod.string().optional(),
+  "telegramID": zod.number().optional(),
+  "updatedAt": zod.string().optional(),
+  "userID": zod.number().optional()
+}).optional(),
+  "wallet": zod.object({
+  "price": zod.number().optional(),
+  "userID": zod.number().optional()
+}).optional()
+})).optional()
+})
+
+
+/**
  * @summary get my transaction
  */
 export const getUsersTransactionsResponse = zod.object({

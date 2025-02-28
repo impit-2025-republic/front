@@ -39,7 +39,7 @@ function RouteComponent() {
       {isLoading && !messages ? "Загрузка" : ""}
       </div>
       
-      <div className="flex flex-row gap-2 justify-center fixed top-auto bottom-18 w-full pr-8 bg-[#191B1F]">
+      <div className="flex flex-row gap-2 justify-center items-center fixed top-auto bottom-18 w-full px-[20px] bg-[#191B1F]">
         <Input onChange={(e)=>setInput(e.target.value)} disabled={!!!messages && isLoading} />
         <Button children={<PaperAirplaneIcon color="#fff" />} disabled={!!!messages && isLoading} onClick={() =>{handleSubmit()}} />
       </div>

@@ -30,6 +30,7 @@ import type {
   UsecaseGetMyHistoryWalletOutput,
   UsecaseLLMChatInput,
   UsecaseLoginOutput,
+  UsecaseTopBalanceOutput,
   UsecaseUpcomingEventList,
   UsecaseUserMeOutput,
   UsecaseVisitEventInput,
@@ -1036,6 +1037,120 @@ export function useGetUsersMe<
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
   const queryOptions = getGetUsersMeQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
+/**
+ * @summary get top balance
+ */
+export const getUsersTop = (signal?: AbortSignal) => {
+  return requestInstance<UsecaseTopBalanceOutput>({
+    url: `/users/top`,
+    method: "GET",
+    signal,
+  });
+};
+
+export const getGetUsersTopQueryKey = () => {
+  return [`/users/top`] as const;
+};
+
+export const getGetUsersTopQueryOptions = <
+  TData = Awaited<ReturnType<typeof getUsersTop>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUsersTop>>, TError, TData>
+  >;
+}) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetUsersTopQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUsersTop>>> = ({
+    signal,
+  }) => getUsersTop(signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getUsersTop>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetUsersTopQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getUsersTop>>
+>;
+export type GetUsersTopQueryError = ErrorType<void>;
+
+export function useGetUsersTop<
+  TData = Awaited<ReturnType<typeof getUsersTop>>,
+  TError = ErrorType<void>,
+>(options: {
+  query: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUsersTop>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUsersTop>>,
+        TError,
+        Awaited<ReturnType<typeof getUsersTop>>
+      >,
+      "initialData"
+    >;
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetUsersTop<
+  TData = Awaited<ReturnType<typeof getUsersTop>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUsersTop>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUsersTop>>,
+        TError,
+        Awaited<ReturnType<typeof getUsersTop>>
+      >,
+      "initialData"
+    >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetUsersTop<
+  TData = Awaited<ReturnType<typeof getUsersTop>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUsersTop>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary get top balance
+ */
+
+export function useGetUsersTop<
+  TData = Awaited<ReturnType<typeof getUsersTop>>,
+  TError = ErrorType<void>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUsersTop>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetUsersTopQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;

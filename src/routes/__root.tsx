@@ -10,7 +10,7 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
-  const { mutate } = useLogin();
+  const { mutate,isPending } = useLogin();
   const initDataRaw = initData.raw();
   // console.log(initDataRaw)
   const onClick = () => mutate(initDataRaw);
@@ -18,7 +18,7 @@ function RootComponent() {
   if (localStorage.getItem("token") === null) {
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <Button children="Войти" onClick={() => onClick()} />
+        <Button children="Войти" disabled={isPending} onClick={() => onClick()} />
       </div>
     );
   }

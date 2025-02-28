@@ -1,9 +1,10 @@
+import { OneEightyRing } from "react-svg-spinners";
 import { useGetUsersTransactions } from "../api/endpoints/b8st-api";
 
 export const Transaction = () => {
-  const { data: history } = useGetUsersTransactions();
+  const { data: history,isLoading } = useGetUsersTransactions();
   console.log(history);
-  
+  if (isLoading)return<div className="w-full h-full flex items-center justify-center"><OneEightyRing width={100} height={100} color="#fff" /> </div>
   return (
       <div>
         

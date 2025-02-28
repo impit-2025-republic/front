@@ -2,6 +2,7 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import { Badge } from "../components/catalyst/badge";
 import money from "/money.png";
 import { useState } from "react";
+import {OneEightyRing} from "react-svg-spinners"
 import {
   useGetUsersMe,
 } from "../api/endpoints/b8st-api";
@@ -15,8 +16,8 @@ function RouteComponent() {
   const [screen, setScreen] = useState<'today' | 'tomorrow' | 'month' | 'week'>(
     'today'
   );
-  const { data } = useGetUsersMe();
-
+  const { data, isLoading } = useGetUsersMe();
+  if (isLoading)return<div className="w-full h-full flex items-center justify-center"><OneEightyRing width={100} height={100} color="#fff" /> </div>
   return (
     <div className="flex flex-col gap-6 text-white">
       <div className="flex flex-row items-center justify-between">

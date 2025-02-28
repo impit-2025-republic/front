@@ -1,29 +1,16 @@
 import TaskCard from "./LastEventCard";
-import { getGetEventsUpcomingQueryKey, useGetEventsArchived, usePostEventsVisit } from "../api/endpoints/b8st-api";
-import { useQueryClient } from "@tanstack/react-query";
 
-const CollectionCardLayout = () => {
-  const { data: upcoming } = useGetEventsArchived();
-  const {mutate} = usePostEventsVisit()
-  const keyFromQuery = getGetEventsUpcomingQueryKey()
-  const queryClient = useQueryClient()
-  const onClick = (id:any)=>{
-    mutate({
-      data:{
-        eventID:id
-      },
-    },{onSuccess:()=>{queryClient.invalidateQueries({queryKey:keyFromQuery})}}
-  )
-  }
-  
+const CollectionCardLayout = ({upcoming}:any) => {
+  console.log(upcoming)
   const upcomingEvents = upcoming
     ? //@ts-ignore
-      upcoming?.events?.filter((data) => data.EventType === "event")
+      upcoming?.filter((data) => data.EventType === "event")
     : [];
   const upcomingTask = upcoming
     ? //@ts-ignore
-      upcoming?.events?.filter((data) => data.EventType === "task")
+      upcoming?.filter((data) => data.EventType === "task")
     : [];
+//   if (isLoading)return<div className="w-full h-full flex items-center justify-center"><OneEightyRing width={100} height={100} color="#fff" /> </div>
     return (
         <div className="flex flex-col w-full gap-2 p-4">
           {/* @ts-ignore */}
@@ -31,6 +18,8 @@ const CollectionCardLayout = () => {
           {/*@ts-nocheck */}
     
           <div className="flex flex-row w-full gap-2 overflow-x-scroll">
+        {/* @ts-ignore */}
+
           {upcomingEvents?.map((data, index) => {
             return (
                 <TaskCard
@@ -63,6 +52,7 @@ const CollectionCardLayout = () => {
           {/* @ts-ignore */}
     
           <div className="flex flex-row gap-2 overflow-x-scroll">
+          {/* @ts-ignore */}
           {upcomingTask?.map((data, index) => {
             return (
                 <TaskCard
