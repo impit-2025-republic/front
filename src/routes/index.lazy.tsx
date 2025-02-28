@@ -17,6 +17,7 @@ function RouteComponent() {
     'today'
   );
   const { data, isLoading } = useGetUsersMe();
+  if(data === null){localStorage.removeItem('token')}
   if (isLoading)return<div className="w-full h-full flex items-center justify-center"><OneEightyRing width={100} height={100} color="#fff" /> </div>
   return (
     <div className="flex flex-col gap-6 text-white">
