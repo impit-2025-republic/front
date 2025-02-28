@@ -29,10 +29,12 @@ export const BronzeChestCard: React.FC<BronzeChestCardProps> = ({
       {/* Main content */}
       <div className="flex flex-col items-center pt-2 pb-2">
         <div className="w-24 h-24">
-          <img src={data.Image} alt={data.Name} className="w-full h-full" />
+            {/*@ts-ignore */}
+          <img src={data?.product?.Image} alt={data?.product?.Name} className="w-full h-full" />
         </div>
         <h2 className="text-white/90 text-center text-base font-medium tracking-tight mt-2">
-          {data.Name}
+            {/*@ts-ignore */}
+          {data?.product?.Name}
         </h2>
       </div>
 
@@ -44,7 +46,8 @@ export const BronzeChestCard: React.FC<BronzeChestCardProps> = ({
             alt=""
             className="w-4 h-4 mr-1"
           />
-          <span className="text-white text-sm font-medium">{data.Price}</span>
+            {/*@ts-ignore */}
+          <span className="text-white text-sm font-medium">{data?.product?.Price}</span>
         </div>
         {/* <div className="flex items-center bg-[#fb5fab] rounded-2xl px-3 py-2">
           <span className="text-white text-sm font-medium">x{pinkMultiplier}</span>

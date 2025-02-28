@@ -39,7 +39,6 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
   const viewportCenterRef = useRef<HTMLDivElement>(null);
   const ITEM_WIDTH = 96; // Ширина каждого элемента в пикселях (w-24 = 96px)
   
-  console.log("OpenCase component received selectedItemId:", selectedItemId);
   
   // @ts-ignore
   const rollItems = items ? items?.products.filter((item) => item.CaseTypeID === null) : [];
@@ -53,7 +52,6 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
       const targetItemId = Number(selectedItemId);
       // @ts-ignore
       const targetItemIndex = rollItems.findIndex(item => Number(item.ProductID) === targetItemId);
-      console.log(`Target item ID ${targetItemId} is at position ${targetItemIndex}`);
       
       // Отложим автоматический запуск, чтобы пользователь мог нажать на сундук
       setShowAnimation(true);
@@ -108,7 +106,6 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
       // Находим индекс в массиве данных
       // @ts-ignore
       const dataIndex = rollItems.findIndex(item => Number(item.ProductID) === targetItemId);
-      console.log(`Target item ID ${targetItemId} found at data index: ${dataIndex}`);
       
       
       // РЕШЕНИЕ: после анализа мы определили, что есть постоянный сдвиг между 
@@ -117,7 +114,6 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
       
       // Применяем точную формулу коррекции с учетом сдвига на +2 позиции
       const visualIndex = (dataIndex + 2) % rollItems.length;
-      console.log(`Applying fixed offset +2: data index ${dataIndex} -> visual index ${visualIndex}`);
       
       // Вычисляем центр видимой области
       const viewportCenter = viewportCenterRef.current.offsetWidth / 2;
@@ -129,7 +125,6 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
       const scrollDistance = (rollItems.length * ITEM_WIDTH * fullSpinsCount) +
                             (visualIndex * ITEM_WIDTH) - viewportCenter + (ITEM_WIDTH / 2) + randomOffset;
       
-      console.log(`Final scroll calculation: Visual index ${visualIndex}, Scroll distance ${scrollDistance}`);
       
       // Выполняем анимацию прокрутки
       spinnerRef.current.style.transition = `transform ${5 + fullSpinsCount}s cubic-bezier(0.1, 0.8, 0.2, 1)`;
@@ -144,7 +139,6 @@ const OpenCase = ({ selectedItemId }: OpenCaseProps) => {
         
         // ВСЕГДА используем именно тот ID, который был передан в качестве пропса
         setWonItem(targetItemId);
-        console.log("Animation finished, setting won item ID:", targetItemId);
         
         setTimeout(() => setCanSpin(true), 500);
       }, spinDuration);

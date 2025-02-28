@@ -9,7 +9,6 @@ import {
   Dialog,
   DialogActions,
   DialogBody,
-  DialogTitle,
 } from "../catalyst/dialog";
 import { Button } from "../catalyst/button";
 import OpenCase from "../case/CaseOpen";
@@ -77,21 +76,17 @@ export const Shop = () => {
       {/* Only render Dialog when isOpen is true AND winItem has a value */}
       {isOpen && (
         <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
-          <DialogTitle>Refund payment</DialogTitle>
+          {/* <DialogTitle></DialogTitle> */}
           <DialogBody>
             {/* Check that winItem exists before rendering OpenCase */}
             {winItem && (
-              <>
-                <div>Debug - Selected Item ID: {JSON.stringify(winItem)}</div>
                 <OpenCase selectedItemId={Number(winItem)} />
-              </>
             )}
           </DialogBody>
           <DialogActions>
             <Button plain onClick={() => setIsOpen(false)}>
-              Cancel
+              Принять
             </Button>
-            <Button onClick={() => setIsOpen(false)}>Refund</Button>
           </DialogActions>
         </Dialog>
       )}

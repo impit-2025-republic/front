@@ -1,7 +1,6 @@
 import TaskCard from "./LastEventCard";
 
 const CollectionCardLayout = ({upcoming}:any) => {
-  console.log(upcoming)
   const upcomingEvents = upcoming
     ? //@ts-ignore
       upcoming?.filter((data) => data.EventType === "event")

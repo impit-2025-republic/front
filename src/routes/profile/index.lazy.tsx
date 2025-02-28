@@ -16,7 +16,11 @@ function RouteComponent() {
   const { data, isLoading } = useGetUsersMe();
   const {data:ratingdata, isLoading:loadingbruh} = useGetUsersTop()
   const [screen, setScreen] = useState("events");
-  if (isLoading)return<div className="w-full h-full flex items-center justify-center"><OneEightyRing width={100} height={100} color="#fff" /> </div>
+  if (isLoading)return<div className="w-full h-full flex flex-col gap-6 items-center justify-center"><OneEightyRing width={100} height={100} color="#fff" /> <Button
+  children={<ArrowLeftStartOnRectangleIcon />}
+  color="red"
+  onClick={() => localStorage.removeItem("token")}
+/></div>
   return (
     <div className="text-white flex flex-col gap-6 mt-6">
       <div className="flex flex-col gap-4 items-center bg-[#26282C] w-[330px] p-3 rounded-3xl">
@@ -33,9 +37,9 @@ function RouteComponent() {
           <p className="text-2xl leading-5">
             {data?.surname} {data?.name} {data?.l_surname}
           </p>
-          <div className="flex flex-row gap-4 justify-between w-full">
+          <div className="flex flex-row gap-4 justify-center items-center w-full">
             
-            <div className="bg-[#3F3F46] h-16 flex justify-between flex-row gap-1 p-1 rounded-2xl">
+            <div className="bg-[#3F3F46] h-16 flex justify-between flex-row gap-1 p-2 rounded-2xl">
               <div className="flex items-center justify-center gap-3">
                 <div className="w-8 h-8 bg-[#f59e0b] rounded-3xl  flex items-center justify-center">
                   <img
@@ -48,9 +52,6 @@ function RouteComponent() {
                   {data?.coin}
                 </span>
               </div>
-            </div>
-            <div>
-
             </div>
           </div>
         </div>
@@ -91,7 +92,7 @@ function RouteComponent() {
         {screen === "rating" ? <div className="flex flex-row gap-2 justify-between items-center">
           <p>Место</p>
           <p>Имя</p>
-          <p>Количество денег</p>
+          <p>Деньги</p>
 
         </div> : null}
         {(loadingbruh === true)&&(screen==="rating") ?<div className="w-full h-full items-center justify-center flex"> <OneEightyRing width={100} height={100} color="#fff" /></div>:null}
