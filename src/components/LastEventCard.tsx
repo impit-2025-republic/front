@@ -92,7 +92,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
     return `${date.getDate()} ${months[date.getMonth()]} ${dateYear}г.`;
   };
   return (
-    <div className="flex flex-col bg-[#26282C] rounded-3xl p-3 w-full h-fit">
+    <div className="flex flex-col bg-[#26282C] w-[212px] rounded-3xl p-3 h-[260px]">
       {/* Top section with coins */}
       <div className="flex flex-col gap-4 flex-1">
         <div className="flex flex-row">

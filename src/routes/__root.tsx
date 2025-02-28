@@ -17,7 +17,7 @@ function RootComponent() {
 
   if (localStorage.getItem("token") === null) {
     return (
-      <div>
+      <div className="w-full h-full flex items-center justify-center">
         <Button children="Войти" onClick={() => onClick()} />
       </div>
     );
